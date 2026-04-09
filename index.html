@@ -38,6 +38,14 @@ h2 {
   color: #FFD700;
 }
 
+select {
+  width: 80%;
+  padding: 12px;
+  margin: 8px;
+  border-radius: 6px;
+  border: none;
+}
+
   </style>
 </head>
 
@@ -52,7 +60,25 @@ h2 {
 <input id="email" placeholder="Correo"><br>
 <input id="password" type="password" placeholder="Contraseña"><br>
 <input id="telefono" placeholder="Teléfono"><br>
-<input id="genero" placeholder="Género musical"><br>
+<select id="genero">
+  <option value="">Selecciona tu género musical</option>
+
+  <option>🎧 Reggaeton</option>
+  <option>🍺 Popular</option>
+  <option>Rancheras</option>
+  <option>Corridos</option>
+  <option>🎤 Vallenato</option>
+  <option>🎺 Salsa</option>
+  <option>Bachata</option>
+  <option>Merengue</option>
+  <option>Champeta</option>
+  <option>Rock</option>
+  <option>Electrónica</option>
+  <option>Trap</option>
+  <option>Hip Hop</option>
+  <option>Baladas</option>
+  <option>Otro</option>
+</select>
 
 <button onclick="registrar()">Registrarse</button>
 
