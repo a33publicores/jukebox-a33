@@ -48,7 +48,7 @@ document.getElementById("search").addEventListener("keyup", async function(e){
 async function seleccionar(item){
     alert("Agregada: " + item.snippet.title);
 
-    await fetch("https://script.google.com/macros/s/AKfycbx4t19RVYM4OajuijXJ16Xu7p1X4M72X28C8WE9kfsgQHTbaAzk-tY2waBeSqQkPFqWVA/exec", {
+    await fetch("https://script.google.com/macros/s/AKfycbw1z80uz8Owd5r8dzfRIxkp06SBNSfpDt5dGOchcPPAnYhXyXLMPI-246uHa5tFPrlzfQ/exec", {
         method: "POST",
         body: JSON.stringify({
             titulo: item.snippet.title,
