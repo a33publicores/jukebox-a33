@@ -11,14 +11,45 @@
 </head>
 
 <body>
+<div id="registro">
+
+<h2>Registro</h2>
+
+<input id="email" placeholder="Correo"><br>
+<input id="password" type="password" placeholder="Contraseña"><br>
+<input id="telefono" placeholder="Teléfono"><br>
+<input id="genero" placeholder="Género musical"><br>
+
+<button onclick="registrar()">Registrarse</button>
+
+<p>¿Ya tienes cuenta? <button onclick="mostrarLogin()">Login</button></p>
+
+</div>
+
+<div id="login" style="display:none;">
+
+<h2>Login</h2>
+
+<input id="loginEmail" placeholder="Correo"><br>
+<input id="loginPassword" type="password" placeholder="Contraseña"><br>
+
+<button onclick="login()">Ingresar</button>
+
+</div>
+  
+
+<div id="jukebox" style="display:none;">
 
 <h1>🎵 Pide tu canción</h1>
-
-<input type="text" id="search" placeholder="Busca canción o artista">
-
+<input type="text" id="search">
 <div id="results"></div>
 
+</div>
+
+
+  
 <script>
+  const URL = "https://script.google.com/macros/s/AKfycbxSPD3oQZlYfHM8cqIb7YUrqlzEOW5jaFPHuZTEu6ZWWpdMDn_5KAzGdYkLiYF__oTDRw/exec";
 const API_KEY = "AIzaSyDdQIS-GrSo-SW_hvjLQCMvhsjtenJzgrY";
 
 document.getElementById("search").addEventListener("keyup", async function(e){
@@ -45,17 +76,54 @@ document.getElementById("search").addEventListener("keyup", async function(e){
     });
 });
 
-async function seleccionar(item){
-    alert("Agregada: " + item.snippet.title);
+await fetch(URL, {
+    method: "POST",
+    body: JSON.stringify({
+        tipo:"cancion",
+        titulo: item.snippet.title,
+        canal: item.snippet.channelTitle,
+        videoId: item.id.videoId
+    })
+});
 
-    await fetch("https://script.google.com/macros/s/AKfycbw1z80uz8Owd5r8dzfRIxkp06SBNSfpDt5dGOchcPPAnYhXyXLMPI-246uHa5tFPrlzfQ/exec", {
-        method: "POST",
-        body: JSON.stringify({
-            titulo: item.snippet.title,
-            canal: item.snippet.channelTitle,
-            videoId: item.id.videoId
-        })
-    });
+  function mostrarLogin(){
+  document.getElementById("registro").style.display = "none";
+  document.getElementById("login").style.display = "block";
+}
+
+async function registrar(){
+  await fetch(URL, {
+    method:"POST",
+    body: JSON.stringify({
+      tipo:"registro",
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value,
+      telefono: document.getElementById("telefono").value,
+      genero: document.getElementById("genero").value
+    })
+  });
+
+  alert("Registrado correctamente");
+}
+
+async function login(){
+  let res = await fetch(URL, {
+    method:"POST",
+    body: JSON.stringify({
+      tipo:"login",
+      email: document.getElementById("loginEmail").value,
+      password: document.getElementById("loginPassword").value
+    })
+  });
+
+  let text = await res.text();
+
+  if(text === "OK"){
+    document.getElementById("login").style.display = "none";
+    document.getElementById("jukebox").style.display = "block";
+  } else {
+    alert("Datos incorrectos");
+  }
 }
 </script>
 
