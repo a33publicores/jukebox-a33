@@ -152,18 +152,28 @@ z-index:999;
 
 <div id="results"></div>
 
+<button onclick="buscarVideos()">Ver más 🔽</button>
+
 </div>
 
 <script>
 const API_KEY = "AIzaSyDdQIS-GrSo-SW_hvjLQCMvhsjtenJzgrY";
 const URL = "https://script.google.com/macros/s/AKfycbxSPD3oQZlYfHM8cqIb7YUrqlzEOW5jaFPHuZTEu6ZWWpdMDn_5KAzGdYkLiYF__oTDRw/exec";
 
+let nextPageToken = "";
+let currentQuery = "";
+
+
 document.getElementById("search").addEventListener("keyup", async function(e){
     let query = e.target.value;
 
     if(query.length < 3) return;
 
-    let res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=${API_KEY}`);
+    // 👇 NUEVO
+    currentQuery = query;
+    nextPageToken = "";
+
+    let res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=10&key=${API_KEY}`);
     let data = await res.json();
 
     let container = document.getElementById("results");
@@ -172,23 +182,27 @@ document.getElementById("search").addEventListener("keyup", async function(e){
     data.items.forEach(item => {
         let div = document.createElement("div");
         div.className = "result";
-div.innerHTML = `
-  <div style="display:flex; align-items:center; gap:15px;">
 
-    <img src="${item.snippet.thumbnails.medium.url}" 
-         style="width:120px; height:70px; object-fit:cover; border-radius:8px;">
+        div.innerHTML = `
+        <div style="display:flex; align-items:center; gap:15px;">
 
-    <div style="text-align:left;">
-      <p style="margin:0;">${item.snippet.title}</p>
-      <small>${item.snippet.channelTitle}</small>
-    </div>
+          <img src="${item.snippet.thumbnails.medium.url}" 
+               style="width:120px; height:70px; object-fit:cover; border-radius:8px;">
 
-  </div>
-`;
+          <div style="text-align:left;">
+            <p style="margin:0;">${item.snippet.title}</p>
+            <small>${item.snippet.channelTitle}</small>
+          </div>
+
+        </div>
+        `;
 
         div.onclick = () => seleccionar(item);
         container.appendChild(div);
     });
+
+    // 👇 NUEVO (GUARDAR TOKEN)
+    nextPageToken = data.nextPageToken;
 });
 
 async function seleccionar(item){
@@ -205,6 +219,49 @@ async function seleccionar(item){
         })
     });
 
+}
+
+async function buscarVideos(reset = false){
+
+    let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${currentQuery}&type=video&maxResults=10&key=${API_KEY}`;
+
+    if(nextPageToken){
+        url += `&pageToken=${nextPageToken}`;
+    }
+
+    let res = await fetch(url);
+    let data = await res.json();
+
+    let container = document.getElementById("results");
+
+    if(reset){
+        container.innerHTML = "";
+    }
+
+    data.items.forEach(item => {
+
+        let div = document.createElement("div");
+        div.className = "result";
+
+        div.innerHTML = `
+        <div style="display:flex; align-items:center; gap:15px;">
+
+            <img src="${item.snippet.thumbnails.medium.url}" 
+                 style="width:120px; height:70px; object-fit:cover; border-radius:8px;">
+
+            <div style="text-align:left;">
+              <p style="margin:0;">${item.snippet.title}</p>
+              <small>${item.snippet.channelTitle}</small>
+            </div>
+
+        </div>
+        `;
+
+        div.onclick = () => seleccionar(item);
+        container.appendChild(div);
+    });
+
+    nextPageToken = data.nextPageToken;
 }
 
 // MOSTRAR LOGIN
