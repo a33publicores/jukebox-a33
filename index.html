@@ -158,7 +158,7 @@ z-index:999;
 
 <script>
 const API_KEY = "AIzaSyDdQIS-GrSo-SW_hvjLQCMvhsjtenJzgrY";
-const URL = "https://script.google.com/macros/s/AKfycbxSPD3oQZlYfHM8cqIb7YUrqlzEOW5jaFPHuZTEu6ZWWpdMDn_5KAzGdYkLiYF__oTDRw/exec";
+const URL = "https://script.google.com/macros/s/AKfycbwT04THJti66PPh8JKXrG9EYI3lMae5j39IDccwth-yL6mfRPThJccNuFkgS5ZZ2PDNaQ/exec";
 
 let nextPageToken = "";
 let currentQuery = "";
@@ -207,18 +207,27 @@ document.getElementById("search").addEventListener("keyup", async function(e){
 
 async function seleccionar(item){
 
-    alert("Agregada: " + item.snippet.title);
+    let usuario = document.getElementById("loginEmail").value;
 
-    await fetch(URL, {
+    let res = await fetch(URL, {
         method: "POST",
         body: JSON.stringify({
             tipo: "cancion",
+            usuario: usuario,
             titulo: item.snippet.title,
             canal: item.snippet.channelTitle,
             videoId: item.id.videoId
         })
     });
 
+    let text = await res.text();
+
+    if(text === "LIMITE"){
+        alert("🚫 Alcanzaste el límite de 15 canciones por hoy");
+        return;
+    }
+
+    alert("✅ Canción agregada");
 }
 
 async function buscarVideos(reset = false){
