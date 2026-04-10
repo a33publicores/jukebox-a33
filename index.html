@@ -58,6 +58,15 @@ select {
   border: none;
 }
 
+.result div {
+  width: 100%;
+}
+
+.result img {
+  min-width: 120px;
+  max-width: 120px;
+}
+
   </style>
 </head>
 
@@ -164,16 +173,16 @@ document.getElementById("search").addEventListener("keyup", async function(e){
         let div = document.createElement("div");
         div.className = "result";
 div.innerHTML = `
-  <div style="display:flex; justify-content:space-between; align-items:center;">
-    
+  <div style="display:flex; align-items:center; gap:15px;">
+
+    <img src="${item.snippet.thumbnails.medium.url}" 
+         style="width:120px; height:70px; object-fit:cover; border-radius:8px;">
+
     <div style="text-align:left;">
-      <p>${item.snippet.title}</p>
+      <p style="margin:0;">${item.snippet.title}</p>
       <small>${item.snippet.channelTitle}</small>
     </div>
 
-    <img src="${item.snippet.thumbnails.medium.url}" 
-         style="width:120px; border-radius:8px;">
-  
   </div>
 `;
 
