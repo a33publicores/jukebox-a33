@@ -5,7 +5,19 @@
   <style>
     body { font-family: Arial; background:#111; color:white; text-align:center; }
     input { width:80%; padding:10px; font-size:18px; }
-    .result { border:1px solid #333; margin:10px; padding:10px; cursor:pointer; }
+    .result {
+  border: 1px solid #333;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.result:hover {
+  background: #222;
+  transform: scale(1.02);
+}
     .result:hover { background:#222; }
     
     button {
@@ -151,10 +163,19 @@ document.getElementById("search").addEventListener("keyup", async function(e){
     data.items.forEach(item => {
         let div = document.createElement("div");
         div.className = "result";
-        div.innerHTML = `
-            <p>${item.snippet.title}</p>
-            <small>${item.snippet.channelTitle}</small>
-        `;
+div.innerHTML = `
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    
+    <div style="text-align:left;">
+      <p>${item.snippet.title}</p>
+      <small>${item.snippet.channelTitle}</small>
+    </div>
+
+    <img src="${item.snippet.thumbnails.medium.url}" 
+         style="width:120px; border-radius:8px;">
+  
+  </div>
+`;
 
         div.onclick = () => seleccionar(item);
         container.appendChild(div);
