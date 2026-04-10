@@ -51,6 +51,29 @@ select {
 
 <body>
 
+  <div id="bienvenida" style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000;
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:999;
+">
+
+<h1>🍻 A33 PUB</h1>
+<p>Bienvenido</p>
+<p>🎶 Tú eliges la música 🎶</p>
+
+<button onclick="entrar()">Entrar</button>
+
+</div>
+
 <img src="https://lh3.googleusercontent.com/d/1SrytkKauKKYxaV4cgMu-wFAsq7_ywWKX" style="width:180px; margin-top:20px;">
 
 <div id="registro">
@@ -111,7 +134,7 @@ select {
 
 <script>
 const API_KEY = "AIzaSyDdQIS-GrSo-SW_hvjLQCMvhsjtenJzgrY";
-const URL = "https://script.google.com/macros/s/AKfycbz_WHQR3loFwTKqCRAJwXa-Jcm0UvivcHy5L-TtN27rtRX7AEwGIqqvOS36bhJiM27ttA/exec";
+const URL = "https://script.google.com/macros/s/AKfycbxSPD3oQZlYfHM8cqIb7YUrqlzEOW5jaFPHuZTEu6ZWWpdMDn_5KAzGdYkLiYF__oTDRw/exec";
 
 document.getElementById("search").addEventListener("keyup", async function(e){
     let query = e.target.value;
@@ -218,6 +241,10 @@ async function login(){
   } else {
     alert("❌ Datos incorrectos");
   }
+}
+
+function entrar(){
+  document.getElementById("bienvenida").style.display = "none";
 }
 </script>
 
