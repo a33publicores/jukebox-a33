@@ -67,6 +67,19 @@ select {
   max-width: 120px;
 }
 
+body {
+  background: linear-gradient(180deg, #0f0f0f, #1c1c1c);
+}
+
+.result {
+  background: #1a1a1a;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.result:hover {
+  background: #252525;
+}
+
   </style>
 </head>
 
@@ -146,10 +159,14 @@ z-index:999;
 
 
 <div id="jukebox" style="display:none;">
+<p id="usuarioActivo" style="color:#FFD700;"></p>
+<button onclick="logout()">Cerrar sesión</button>
 
 <h1>🎵 Pide tu canción</h1>
 
 <input type="text" id="search" placeholder="Busca canción o artista">
+
+<div id="seleccionActual" style="margin:10px; color:#FFD700;"></div>
 
 <div id="results"></div>
 
@@ -207,6 +224,9 @@ document.getElementById("search").addEventListener("keyup", async function(e){
 });
 
 async function seleccionar(item){
+
+  document.getElementById("seleccionActual").innerHTML =
+"🎵 Seleccionaste: " + item.snippet.title;
 
     let usuario = document.getElementById("loginEmail").value;
 
@@ -355,6 +375,16 @@ function entrar(){
 function volverRegistro(){
   document.getElementById("login").style.display = "none";
   document.getElementById("registro").style.display = "block";
+}
+
+let user = localStorage.getItem("usuario");
+if(user){
+  document.getElementById("usuarioActivo").innerText = "👤 " + user;
+}
+
+function logout(){
+  localStorage.removeItem("usuario");
+  location.reload();
 }
 
 </script>
