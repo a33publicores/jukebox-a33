@@ -90,20 +90,24 @@ body {
   display:flex;
   justify-content:center;
   align-items:center;
+  flex-direction: column;
   z-index:9999;
 }
 
+/* 🔥 LOGO ANIMADO */
 #logoAnimado {
   width:180px;
-  animation: aparecer 2s ease-in-out;
+  animation: cerveza 2.5s ease-in-out;
 }
 
+/* 🔥 ANIMACIÓN PRINCIPAL */
 @keyframes aparecer {
   0% { transform: scale(0.5); opacity:0; }
   50% { transform: scale(1.2); }
   100% { transform: scale(1); opacity:1; }
 }
 
+/* 🔥 ANIMACIÓN MEJORADA */
 @keyframes cerveza {
   0% {
     transform: scale(0.5) rotate(-10deg);
@@ -121,6 +125,7 @@ body {
   }
 }
 
+/* 🍺 ESPUMA */
 #espuma {
   position: absolute;
   width: 120px;
@@ -138,15 +143,17 @@ body {
   100% { opacity: 0; transform: scale(1.8); }
 }
 
+/* 📱 CONTENEDOR */
 .contenedor {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* centra vertical */
-  align-items: center;     /* centra horizontal */
-  height: 100vh;           /* ocupa toda la pantalla */
-  gap: 15px;               /* espacio entre elementos */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 15px;
 }
 
+/* 🔥 LOGO NORMAL (pantalla principal) */
 .logo {
   width: 140px;
 }
@@ -157,7 +164,8 @@ body {
 <body>
 
 <div id="splash">
-  <img src="https://lh3.googleusercontent.com/d/1ex-5k_ud_5OMAsraj0HHZWIrJFjgW4PA" class="logo">
+  <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1ex-5k_ud_5OMAsraj0HHZWIrJFjgW4PA" class="logo">
+  <div id="espuma"></div>
 </div>
 
 <div id="bienvenida" class="contenedor">
