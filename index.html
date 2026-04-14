@@ -209,6 +209,13 @@ async function seleccionar(item){
 
     let usuario = document.getElementById("loginEmail").value;
 
+    // 🔥 CONFIRMACIÓN ANTES DE ENVIAR
+    let confirmar = confirm("¿Deseas agregar esta canción?\n\n" + item.snippet.title);
+
+    if(!confirmar){
+        return; // ❌ si cancela, no hace nada
+    }
+
     let res = await fetch(URL, {
         method: "POST",
         body: JSON.stringify({
