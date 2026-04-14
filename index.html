@@ -461,17 +461,40 @@ let sonido = new Audio("https://drive.google.com/uc?export=download&id=12dmGFjAH
 
 window.addEventListener("load", function(){
 
+  // 🔥 FORZAR ANIMACIÓN DEL LOGO
+  let logo = document.getElementById("logoAnimado");
+  if(logo){
+    logo.style.animation = "none";
+    logo.offsetHeight; // reinicia animación
+    logo.style.animation = "cerveza 2.5s ease-in-out";
+  }
+
+  // 🔥 INTENTAR SONIDO (DESKTOP)
+  sonido.play().catch(()=>{});
+
+  // 🔥 ACTIVAR SONIDO EN MÓVIL (cuando toque pantalla)
+  document.body.addEventListener("click", function(){
+    sonido.play().catch(()=>{});
+  }, { once: true });
+
   // 🔥 vibración (sí funciona siempre)
   if(navigator.vibrate){
     navigator.vibrate(200);
   }
 
-  // 🔥 quitar splash
+  // 🔥 quitar splash con fade (más pro)
   setTimeout(()=>{
     let splash = document.getElementById("splash");
+
     if(splash){
-      splash.style.display = "none";
+      splash.style.transition = "opacity 0.5s";
+      splash.style.opacity = "0";
+
+      setTimeout(()=>{
+        splash.style.display = "none";
+      }, 500);
     }
+
   }, 2500);
 
 });
