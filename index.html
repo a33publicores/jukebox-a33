@@ -372,18 +372,26 @@ function volverRegistro(){
   document.getElementById("registro").style.display = "block";
 }
 
-// ENTER en LOGIN
-document.getElementById("loginPassword").addEventListener("keypress", function(e){
-  if(e.key === "Enter"){
-    login();
-  }
-});
+window.addEventListener("load", function(){
 
-// ENTER en REGISTRO
-document.getElementById("password").addEventListener("keypress", function(e){
-  if(e.key === "Enter"){
-    registrar();
+  let loginPass = document.getElementById("loginPassword");
+  if(loginPass){
+    loginPass.addEventListener("keypress", function(e){
+      if(e.key === "Enter"){
+        login();
+      }
+    });
   }
+
+  let pass = document.getElementById("password");
+  if(pass){
+    pass.addEventListener("keypress", function(e){
+      if(e.key === "Enter"){
+        registrar();
+      }
+    });
+  }
+
 });
 
 // 🔥 mantener sesión
