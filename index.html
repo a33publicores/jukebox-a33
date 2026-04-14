@@ -4,367 +4,167 @@
   <title>Jukebox Bar</title>
   <style>
     body { font-family: Arial; background:#111; color:white; text-align:center; }
-    input { width:80%; padding:10px; font-size:18px; }
-    .result {
-  border: 1px solid #333;
-  margin: 10px;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 10px;
-  transition: 0.3s;
-}
 
-.result:hover {
-  background: #222;
-  transform: scale(1.02);
-}
-    .result:hover { background:#222; }
-    
+    input, select {
+      width: 80%;
+      padding: 12px;
+      margin: 8px;
+      border-radius: 6px;
+      border: none;
+    }
+
     button {
-  padding: 12px 25px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 8px;
-  background: linear-gradient(45deg, #FFD700, #FFA500);
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
+      padding: 12px 25px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #FFD700, #FFA500);
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
+    .result {
+      border: 1px solid #333;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
 
-input {
-  width: 80%;
-  padding: 12px;
-  margin: 8px;
-  border-radius: 6px;
-  border: none;
-}
+    .result:hover {
+      background:#222;
+    }
 
-h2 {
-  margin-top: 20px;
-  color: #FFD700;
-}
-
-select {
-  width: 80%;
-  padding: 12px;
-  margin: 8px;
-  border-radius: 6px;
-  border: none;
-}
-
-.result div {
-  width: 100%;
-}
-
-.result img {
-  min-width: 120px;
-  max-width: 120px;
-}
-
+    h2 { color:#FFD700; }
   </style>
 </head>
 
 <body>
 
-  <div id="bienvenida" style="
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000;
-color:white;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:999;
-">
-
-<img src="https://lh3.googleusercontent.com/d/1SrytkKauKKYxaV4cgMu-wFAsq7_ywWKX" 
-     style="width:200px; margin-bottom:20px;">
-<p>Bienvenido</p>
-<p>🎶 Tú eliges la música 🎶</p>
-
-<button onclick="entrar()">Entrar</button>
-
+<!-- BIENVENIDA -->
+<div id="bienvenida" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:999;">
+  <img src="https://lh3.googleusercontent.com/d/1SrytkKauKKYxaV4cgMu-wFAsq7_ywWKX" style="width:200px;">
+  <p>🎶 Tú eliges la música 🎶</p>
+  <button onclick="entrar()">Entrar</button>
 </div>
 
 <img src="https://lh3.googleusercontent.com/d/1SrytkKauKKYxaV4cgMu-wFAsq7_ywWKX" style="width:180px; margin-top:20px;">
 
+<!-- REGISTRO -->
 <div id="registro">
+  <h2>Registro</h2>
 
-<h2>Registrate</h2>
+  <input id="email" placeholder="Correo">
+  <input id="password" type="password" placeholder="Contraseña">
+  <input id="telefono" placeholder="Teléfono">
 
-<input id="email" placeholder="Correo"><br>
-<input id="password" type="password" placeholder="Contraseña"><br>
-<input id="telefono" placeholder="Teléfono"><br>
-<select id="genero">
-  <option value="">Selecciona tu género musical</option>
+  <select id="genero">
+    <option value="">Selecciona tu género</option>
+    <option>Reggaeton</option>
+    <option>Popular</option>
+    <option>Vallenato</option>
+    <option>Salsa</option>
+  </select>
 
-  <option>🎧Reggaeton</option>
-  <option>🍺Popular</option>
-  <option>Rancheras</option>
-  <option>Corridos</option>
-  <option>🎤Vallenato</option>
-  <option>🎺Salsa</option>
-  <option>Bachata</option>
-  <option>Merengue</option>
-  <option>Champeta</option>
-  <option>Rock</option>
-  <option>Electrónica</option>
-  <option>Trap</option>
-  <option>Hip Hop</option>
-  <option>Baladas</option>
-  <option>Otro</option>
-</select>
-
-<button onclick="registrar()">Registrarse</button>
-
-<p>¿Ya tienes cuenta? <button onclick="mostrarLogin()">Login</button></p>
-
+  <button onclick="registrar()">Registrarse</button>
+  <p><button onclick="mostrarLogin()">Ya tengo cuenta</button></p>
 </div>
 
-
+<!-- LOGIN -->
 <div id="login" style="display:none;">
+  <h2>Login</h2>
 
-<h2>Login</h2>
+  <input id="loginEmail" placeholder="Correo">
+  <input id="loginPassword" type="password" placeholder="Contraseña">
 
-<input id="loginEmail" placeholder="Correo"><br>
-<input id="loginPassword" type="password" placeholder="Contraseña"><br>
-
-<button onclick="login()">Ingresar</button>
-<button onclick="volverRegistro()">⬅ Volver</button>
-
+  <button onclick="login()">Ingresar</button>
+  <button onclick="volverRegistro()">⬅ Volver</button>
 </div>
 
-
+<!-- JUKEBOX -->
 <div id="jukebox" style="display:none;">
-
-<h1>🎵 Pide tu canción</h1>
-
-<input type="text" id="search" placeholder="Busca canción o artista">
-
-<div id="results"></div>
-
-<button onclick="buscarVideos()">Ver más 🔽</button>
-
+  <h2>🎵 Buscar canción</h2>
+  <input id="search" placeholder="Buscar...">
+  <div id="results"></div>
 </div>
 
 <script>
+
 const API_KEY = "AIzaSyDWez-XOlSj-L1vw8iP2R3P2DfFFgEMLRI";
 const URL = "https://script.google.com/macros/s/AKfycbwT04THJti66PPh8JKXrG9EYI3lMae5j39IDccwth-yL6mfRPThJccNuFkgS5ZZ2PDNaQ/exec";
 
 let nextPageToken = "";
 let currentQuery = "";
 
+// 🔥 TODO CARGA AQUÍ
+window.addEventListener("load", function(){
 
-document.getElementById("search").addEventListener("keyup", async function(e){
+  // 🔐 sesión
+  let usuario = localStorage.getItem("usuario");
+  if(usuario){
+    mostrarJukebox();
+  }
+
+  // ENTER LOGIN
+  document.getElementById("loginPassword").addEventListener("keypress", function(e){
+    if(e.key === "Enter") login();
+  });
+
+  // ENTER REGISTRO
+  document.getElementById("password").addEventListener("keypress", function(e){
+    if(e.key === "Enter") registrar();
+  });
+
+  // BUSCADOR
+  document.getElementById("search").addEventListener("keyup", async function(e){
+
     let query = e.target.value;
-
     let container = document.getElementById("results");
 
-// 🔥 LIMPIAR SI ESTÁ VACÍO
-if(query.trim() === ""){
-    container.innerHTML = "";
-    return;
-}
+    if(query.trim() === "" || query.length < 3){
+      container.innerHTML = "";
+      return;
+    }
 
-    if(query.length < 3){
-    container.innerHTML = ""; // 🔥 limpia resultados
-    return;
-}
-
-    // 👇 NUEVO
     currentQuery = query;
-    nextPageToken = "";
 
     let res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=10&key=${API_KEY}`);
     let data = await res.json();
 
-    let container = document.getElementById("results");
     container.innerHTML = "";
 
     data.items.forEach(item => {
-        let div = document.createElement("div");
-        div.className = "result";
 
-        div.innerHTML = `
-        <div style="display:flex; align-items:center; gap:15px;">
+      let div = document.createElement("div");
+      div.className = "result";
 
-          <img src="${item.snippet.thumbnails.medium.url}" 
-               style="width:120px; height:70px; object-fit:cover; border-radius:8px;">
-
-          <div style="text-align:left;">
-            <p style="margin:0;">${item.snippet.title}</p>
-            <small>${item.snippet.channelTitle}</small>
-          </div>
-
+      div.innerHTML = `
+      <div style="display:flex;gap:10px;">
+        <img src="${item.snippet.thumbnails.medium.url}" width="120">
+        <div>
+          <p>${item.snippet.title}</p>
+          <small>${item.snippet.channelTitle}</small>
         </div>
-        `;
+      </div>`;
 
-        div.onclick = () => seleccionar(item);
-        container.appendChild(div);
+      div.onclick = () => seleccionar(item);
+      container.appendChild(div);
     });
 
-    // 👇 NUEVO (GUARDAR TOKEN)
-    nextPageToken = data.nextPageToken;
+  });
+
 });
 
-async function seleccionar(item){
-
-    let usuario = localStorage.getItem("usuario");
-
-    // 🔥 CONFIRMACIÓN ANTES DE ENVIAR
-    let confirmar = confirm("¿Deseas agregar esta canción?\n\n" + item.snippet.title);
-
-    if(!confirmar){
-        return; // ❌ si cancela, no hace nada
-    }
-
-    let res = await fetch(URL, {
-        method: "POST",
-        body: JSON.stringify({
-            tipo: "cancion",
-            usuario: usuario,
-            titulo: item.snippet.title,
-            canal: item.snippet.channelTitle,
-            videoId: item.id.videoId
-        })
-    });
-
-    let text = await res.text();
-
-    if(text === "LIMITE"){
-        alert("🚫 Alcanzaste el límite de 15 canciones por hoy");
-        return;
-    }
-
-    alert("✅ Canción agregada");
-}
-
-async function buscarVideos(reset = false){
-
-    let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${currentQuery}&type=video&maxResults=10&key=${API_KEY}`;
-
-    if(nextPageToken){
-        url += `&pageToken=${nextPageToken}`;
-    }
-
-    let res = await fetch(url);
-    let data = await res.json();
-
-    let container = document.getElementById("results");
-
-    if(reset){
-        container.innerHTML = "";
-    }
-
-    data.items.forEach(item => {
-
-        let div = document.createElement("div");
-        div.className = "result";
-
-        div.innerHTML = `
-        <div style="display:flex; align-items:center; gap:15px;">
-
-            <img src="${item.snippet.thumbnails.medium.url}" 
-                 style="width:120px; height:70px; object-fit:cover; border-radius:8px;">
-
-            <div style="text-align:left;">
-              <p style="margin:0;">${item.snippet.title}</p>
-              <small>${item.snippet.channelTitle}</small>
-            </div>
-
-        </div>
-        `;
-
-        div.onclick = () => seleccionar(item);
-        container.appendChild(div);
-    });
-
-    nextPageToken = data.nextPageToken;
-}
-
-// MOSTRAR LOGIN
-function mostrarLogin(){
-  document.getElementById("registro").style.display = "none";
-  document.getElementById("login").style.display = "block";
-}
-
-// REGISTRO CON VALIDACIÓN
-async function registrar(){
-
-  let email = document.getElementById("email").value;
-  let password = document.getElementById("password").value;
-  let telefono = document.getElementById("telefono").value;
-  let genero = document.getElementById("genero").value;
-
-  // 🔴 VALIDACIÓN (PASO 3)
-  if(!email || !password || !telefono || !genero){
-    alert("⚠️ Todos los campos son obligatorios");
-    return;
-  }
-
-  await fetch(URL, {
-    method:"POST",
-    body: JSON.stringify({
-      tipo:"registro",
-      email,
-      password,
-      telefono,
-      genero
-    })
-  });
-
-  alert("✅ Registrado correctamente");
-
-  // opcional: pasar directo a login
-  mostrarLogin();
-}
-
-// LOGIN CON VALIDACIÓN
-async function login(){
-
-  let email = document.getElementById("loginEmail").value;
-  let password = document.getElementById("loginPassword").value;
-
-  if(!email || !password){
-    alert("⚠️ Ingresa correo y contraseña");
-    return;
-  }
-
-  let res = await fetch(URL, {
-    method:"POST",
-    body: JSON.stringify({
-      tipo:"login",
-      email,
-      password
-    })
-  });
-
-  let text = await res.text();
-
-  if(text === "OK"){
-
-  // 🔥 guardar sesión
-  localStorage.setItem("usuario", document.getElementById("loginEmail").value);
-
-  document.getElementById("login").style.display = "none";
-  document.getElementById("jukebox").style.display = "block";
-} else {
-    alert("❌ Datos incorrectos");
-  }
-}
+// FUNCIONES
 
 function entrar(){
   document.getElementById("bienvenida").style.display = "none";
+}
+
+function mostrarLogin(){
+  document.getElementById("registro").style.display = "none";
+  document.getElementById("login").style.display = "block";
 }
 
 function volverRegistro(){
@@ -372,38 +172,73 @@ function volverRegistro(){
   document.getElementById("registro").style.display = "block";
 }
 
-window.addEventListener("load", function(){
+function mostrarJukebox(){
+  document.getElementById("registro").style.display = "none";
+  document.getElementById("login").style.display = "none";
+  document.getElementById("jukebox").style.display = "block";
+}
 
-  let loginPass = document.getElementById("loginPassword");
-  if(loginPass){
-    loginPass.addEventListener("keypress", function(e){
-      if(e.key === "Enter"){
-        login();
-      }
-    });
+async function registrar(){
+
+  let email = email.value;
+  let password = document.getElementById("password").value;
+  let telefono = document.getElementById("telefono").value;
+  let genero = document.getElementById("genero").value;
+
+  if(!email || !password || !telefono || !genero){
+    alert("Completa todo");
+    return;
   }
 
-  let pass = document.getElementById("password");
-  if(pass){
-    pass.addEventListener("keypress", function(e){
-      if(e.key === "Enter"){
-        registrar();
-      }
-    });
+  await fetch(URL, {
+    method:"POST",
+    body: JSON.stringify({ tipo:"registro", email, password, telefono, genero })
+  });
+
+  alert("Registrado");
+  mostrarLogin();
+}
+
+async function login(){
+
+  let email = document.getElementById("loginEmail").value;
+  let password = document.getElementById("loginPassword").value;
+
+  let res = await fetch(URL, {
+    method:"POST",
+    body: JSON.stringify({ tipo:"login", email, password })
+  });
+
+  let text = await res.text();
+
+  if(text === "OK"){
+    localStorage.setItem("usuario", email);
+    mostrarJukebox();
+  } else {
+    alert("Error");
   }
+}
 
-});
+async function seleccionar(item){
 
-// 🔥 mantener sesión
-window.onload = function(){
   let usuario = localStorage.getItem("usuario");
 
-  if(usuario){
-    document.getElementById("registro").style.display = "none";
-    document.getElementById("login").style.display = "none";
-    document.getElementById("jukebox").style.display = "block";
-  }
-};
+  let confirmar = confirm("¿Agregar?\n" + item.snippet.title);
+  if(!confirmar) return;
+
+  await fetch(URL, {
+    method:"POST",
+    body: JSON.stringify({
+      tipo:"cancion",
+      usuario,
+      titulo: item.snippet.title,
+      canal: item.snippet.channelTitle,
+      videoId: item.id.videoId
+    })
+  });
+
+  alert("Agregada");
+}
 
 </script>
 
