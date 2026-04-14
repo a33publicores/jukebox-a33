@@ -3,7 +3,10 @@
 <head>
   <title>Jukebox Bar</title>
   <style>
-    body { font-family: Arial; background:#111; color:white; text-align:center; }
+    body { font-family: Arial; background:#111; color:white; text-align:center; 
+    <div id="splash">
+  <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1SrytkKauKKYxaV4cgMu-wFAsq7_ywWKX">
+</div>}
     input { width:80%; padding:10px; font-size:18px; }
     .result {
   border: 1px solid #333;
@@ -80,6 +83,56 @@ body {
   background: #252525;
 }
 
+#splash {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#logoAnimado {
+  width: 180px;
+  animation: cerveza 2.5s ease-in-out forwards;
+}
+
+@keyframes cerveza {
+  0% {
+    transform: scale(0.5) rotate(-10deg);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.3) rotate(8deg);
+  }
+  70% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+#espuma {
+  position: absolute;
+  width: 120px;
+  height: 60px;
+  background: white;
+  border-radius: 50%;
+  bottom: 40%;
+  opacity: 0;
+  animation: espuma 2s forwards;
+}
+
+@keyframes espuma {
+  0% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.3); }
+  100% { opacity: 0; transform: scale(1.8); }
+}
+
   </style>
 </head>
 
@@ -110,6 +163,7 @@ z-index:999;
 </div>
 
 <img src="https://lh3.googleusercontent.com/d/1SrytkKauKKYxaV4cgMu-wFAsq7_ywWKX" style="width:180px; margin-top:20px;">
+<div id="espuma"></div>
 
 <div id="registro">
 
@@ -386,6 +440,30 @@ function logout(){
   localStorage.removeItem("usuario");
   location.reload();
 }
+
+let sonido = new Audio("https://drive.google.com/uc?export=download&id=12dmGFjAHowmhSIRU6kaFFCVVr902M594");
+
+window.addEventListener("load", function(){
+
+  // 🔥 reproducir sonido (importante para móviles)
+  sonido.play().catch(()=>{});
+
+  // 🔥 vibración (solo celular)
+  if(navigator.vibrate){
+    navigator.vibrate(200);
+  }
+
+  // 🔥 quitar splash
+  setTimeout(()=>{
+    document.getElementById("splash").style.opacity = "0";
+
+    setTimeout(()=>{
+      document.getElementById("splash").style.display = "none";
+    }, 500);
+
+  }, 2500);
+
+});
 
 </script>
 
