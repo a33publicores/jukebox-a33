@@ -168,7 +168,18 @@ let currentQuery = "";
 document.getElementById("search").addEventListener("keyup", async function(e){
     let query = e.target.value;
 
-    if(query.length < 3) return;
+    let container = document.getElementById("results");
+
+// 🔥 LIMPIAR SI ESTÁ VACÍO
+if(query.trim() === ""){
+    container.innerHTML = "";
+    return;
+}
+
+    if(query.length < 3){
+    container.innerHTML = ""; // 🔥 limpia resultados
+    return;
+}
 
     // 👇 NUEVO
     currentQuery = query;
