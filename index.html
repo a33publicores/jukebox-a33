@@ -140,6 +140,7 @@ z-index:999;
 <input id="loginPassword" type="password" placeholder="Contraseña"><br>
 
 <button onclick="login()">Ingresar</button>
+<button onclick="volverRegistro()">⬅ Volver</button>
 
 </div>
 
@@ -207,7 +208,7 @@ document.getElementById("search").addEventListener("keyup", async function(e){
 
 async function seleccionar(item){
 
-    let usuario = document.getElementById("loginEmail").value;
+    let usuario = localStorage.getItem("usuario");
 
     // 🔥 CONFIRMACIÓN ANTES DE ENVIAR
     let confirmar = confirm("¿Deseas agregar esta canción?\n\n" + item.snippet.title);
@@ -340,9 +341,13 @@ async function login(){
   let text = await res.text();
 
   if(text === "OK"){
-    document.getElementById("login").style.display = "none";
-    document.getElementById("jukebox").style.display = "block";
-  } else {
+
+  // 🔥 guardar sesión
+  localStorage.setItem("usuario", document.getElementById("loginEmail").value);
+
+  document.getElementById("login").style.display = "none";
+  document.getElementById("jukebox").style.display = "block";
+} else {
     alert("❌ Datos incorrectos");
   }
 }
@@ -350,6 +355,37 @@ async function login(){
 function entrar(){
   document.getElementById("bienvenida").style.display = "none";
 }
+
+function volverRegistro(){
+  document.getElementById("login").style.display = "none";
+  document.getElementById("registro").style.display = "block";
+}
+
+// ENTER en LOGIN
+document.getElementById("loginPassword").addEventListener("keypress", function(e){
+  if(e.key === "Enter"){
+    login();
+  }
+});
+
+// ENTER en REGISTRO
+document.getElementById("password").addEventListener("keypress", function(e){
+  if(e.key === "Enter"){
+    registrar();
+  }
+});
+
+// 🔥 mantener sesión
+window.onload = function(){
+  let usuario = localStorage.getItem("usuario");
+
+  if(usuario){
+    document.getElementById("registro").style.display = "none";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("jukebox").style.display = "block";
+  }
+};
+
 </script>
 
 </body>
