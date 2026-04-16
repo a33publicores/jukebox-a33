@@ -96,7 +96,7 @@ body {
 
 /* 🔥 LOGO ANIMADO */
 #logoAnimado {
-  width:250px;
+  width:180px;
   animation: cerveza 2.5s ease-in-out;
 }
 
@@ -164,7 +164,7 @@ body {
 
 /* 🔥 LOGO NORMAL (pantalla principal) */
 .logo {
-  width: 200px;
+  width: 140px;
 }
 
   </style>
@@ -253,52 +253,161 @@ body {
 </div>
 
 <script>
-const API_KEY = "AIzaSyBZhVDpGAdlDOHhwb9CWQKnKiYgW1Z4M18";
+
+// 🔥 API KEYS
+const API_KEYS = [
+  "AIzaSyATYQhdszUE85yySE_-8W7H6ZeEHy9asyc",
+  "AIzaSyDWez-XOlSj-L1vw8iP2R3P2DfFFgEMLRI",
+  "AIzaSyBZhVDpGAdlDOHhwb9CWQKnKiYgW1Z4M18",
+  "AIzaSyDeiCGBrpwf15wCkSPOKxTq_eC9pmQwZAs"
+];
+
+let apiIndex = 0;
+
+// 🔥 CACHE
+let cache = {};
+
+// 🔥 CONTROL
+let ultimoTiempo = 0;
+let busquedas = JSON.parse(localStorage.getItem("busquedas")) || 0;
+
+function normalizar(query){
+  return query.toLowerCase().trim();
+}
+
+function guardarCache(query, data){
+  let cacheLocal = JSON.parse(localStorage.getItem("cacheYT")) || {};
+  cacheLocal[query] = { data, time: Date.now() };
+  localStorage.setItem("cacheYT", JSON.stringify(cacheLocal));
+}
+
+function obtenerCache(query){
+  let cacheLocal = JSON.parse(localStorage.getItem("cacheYT")) || {};
+
+  if(cacheLocal[query]){
+    let tiempo = Date.now() - cacheLocal[query].time;
+
+    if(tiempo < 1000 * 60 * 60 * 6){
+      return cacheLocal[query].data;
+    } else {
+      delete cacheLocal[query];
+      localStorage.setItem("cacheYT", JSON.stringify(cacheLocal));
+    }
+  }
+
+  return null;
+}
+
+async function buscarConRotacion(query){
+
+  for(let i = 0; i < API_KEYS.length; i++){
+
+    let key = API_KEYS[apiIndex];
+
+    try{
+      let res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=10&key=${key}`);
+      let data = await res.json();
+
+      if(!data.error){
+        return data;
+      }
+
+      if(data.error.message.includes("quota") || data.error.code === 403){
+        apiIndex = (apiIndex + 1) % API_KEYS.length;
+      }
+
+    } catch(e){
+      apiIndex = (apiIndex + 1) % API_KEYS.length;
+    }
+  }
+
+  alert("🚫 APIs agotadas");
+  return null;
+}
+
+async function buscarOptimizado(query){
+
+  query = normalizar(query);
+
+  if(query.length < 5){
+    alert("Escribe mejor la canción");
+    return;
+  }
+
+  if(Date.now() - ultimoTiempo < 3000){
+    alert("Espera 3 segundos");
+    return;
+  }
+
+  ultimoTiempo = Date.now();
+
+  if(busquedas >= 4){
+    alert("Límite de búsquedas alcanzado");
+    return;
+  }
+
+  busquedas++;
+  localStorage.setItem("busquedas", busquedas);
+
+  if(cache[query]) return cache[query];
+
+  let local = obtenerCache(query);
+  if(local){
+    cache[query] = local;
+    return local;
+  }
+
+  let data = await buscarConRotacion(query);
+
+  if(data){
+    cache[query] = data;
+    guardarCache(query, data);
+  }
+
+  return data;
+}
+
+
+const API_KEY = "AIzaSyDWez-XOlSj-L1vw8iP2R3P2DfFFgEMLRI";
 const URL = "https://script.google.com/macros/s/AKfycbwT04THJti66PPh8JKXrG9EYI3lMae5j39IDccwth-yL6mfRPThJccNuFkgS5ZZ2PDNaQ/exec";
 
 let nextPageToken = "";
 let currentQuery = "";
 
 
-document.getElementById("search").addEventListener("keyup", async function(e){
+document.getElementById("search").addEventListener("keypress", async function(e){
+
+  if(e.key === "Enter"){
+
     let query = e.target.value;
 
-    if(query.length < 3) return;
-
-    // 👇 NUEVO
-    currentQuery = query;
-    nextPageToken = "";
-
-    let res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=10&key=${API_KEY}`);
-    let data = await res.json();
+    let data = await buscarOptimizado(query);
+    if(!data) return;
 
     let container = document.getElementById("results");
     container.innerHTML = "";
 
     data.items.forEach(item => {
-        let div = document.createElement("div");
-        div.className = "result";
 
-        div.innerHTML = `
-        <div style="display:flex; align-items:center; gap:15px;">
+      let div = document.createElement("div");
+      div.className = "result";
 
-          <img src="${item.snippet.thumbnails.medium.url}" 
-               style="width:120px; height:70px; object-fit:cover; border-radius:8px;">
-
-          <div style="text-align:left;">
-            <p style="margin:0;">${item.snippet.title}</p>
+      div.innerHTML = `
+        <div style="display:flex; gap:10px;">
+          <img src="${item.snippet.thumbnails.medium.url}" style="width:120px;">
+          <div>
+            <p>${item.snippet.title}</p>
             <small>${item.snippet.channelTitle}</small>
           </div>
-
         </div>
-        `;
+      `;
 
-        div.onclick = () => seleccionar(item);
-        container.appendChild(div);
+      div.onclick = () => seleccionar(item);
+      container.appendChild(div);
     });
 
-    // 👇 NUEVO (GUARDAR TOKEN)
-    nextPageToken = data.nextPageToken;
+  }
+
 });
 
 async function seleccionar(item){
