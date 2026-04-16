@@ -305,7 +305,7 @@ async function buscarConRotacion(query){
     let key = API_KEYS[apiIndex];
 
     try{
-      let res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=10&key=${key}`);
+      let res = await fetch("https://TU-APP.railway.app/buscar?q=" + query);
       let data = await res.json();
 
       if(!data.error){
@@ -375,39 +375,45 @@ let nextPageToken = "";
 let currentQuery = "";
 
 
-document.getElementById("search").addEventListener("keypress", async function(e){
-
-  if(e.key === "Enter"){
-
+document.getElementById("search").addEventListener("keyup", async function(e){
     let query = e.target.value;
 
-    let data = await buscarOptimizado(query);
-    if(!data) return;
+    if(query.length < 3) return;
+
+    // 👇 NUEVO
+    currentQuery = query;
+    nextPageToken = "";
+
+    let res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=10&key=${API_KEY}`);
+    let data = await res.json();
 
     let container = document.getElementById("results");
     container.innerHTML = "";
 
     data.items.forEach(item => {
+        let div = document.createElement("div");
+        div.className = "result";
 
-      let div = document.createElement("div");
-      div.className = "result";
+        div.innerHTML = `
+        <div style="display:flex; align-items:center; gap:15px;">
 
-      div.innerHTML = `
-        <div style="display:flex; gap:10px;">
-          <img src="${item.snippet.thumbnails.medium.url}" style="width:120px;">
-          <div>
-            <p>${item.snippet.title}</p>
+          <img src="${item.snippet.thumbnails.medium.url}" 
+               style="width:120px; height:70px; object-fit:cover; border-radius:8px;">
+
+          <div style="text-align:left;">
+            <p style="margin:0;">${item.snippet.title}</p>
             <small>${item.snippet.channelTitle}</small>
           </div>
-        </div>
-      `;
 
-      div.onclick = () => seleccionar(item);
-      container.appendChild(div);
+        </div>
+        `;
+
+        div.onclick = () => seleccionar(item);
+        container.appendChild(div);
     });
 
-  }
-
+    // 👇 NUEVO (GUARDAR TOKEN)
+    nextPageToken = data.nextPageToken;
 });
 
 async function seleccionar(item){
@@ -615,6 +621,74 @@ window.addEventListener("load", function(){
   }, 2500);
 
 });
+
+document.getElementById("search").addEventListener("keypress", async function(e){
+
+  if(e.key === "Enter"){
+
+    let query = e.target.value;
+
+    let data = await buscarOptimizado(query);
+    if(!data) return;
+
+    let container = document.getElementById("results");
+    container.innerHTML = "";
+
+    data.items.forEach(item => {
+
+      let div = document.createElement("div");
+      div.className = "result";
+
+      div.innerHTML = `
+        <div style="display:flex; gap:10px;">
+          <img src="${item.snippet.thumbnails.medium.url}" style="width:120px;">
+          <div>
+            <p>${item.snippet.title}</p>
+            <small>${item.snippet.channelTitle}</small>
+          </div>
+        </div>
+      `;
+
+      div.onclick = () => seleccionar(item);
+      container.appendChild(div);
+    });
+
+  }
+
+});
+
+let nextPageToken = "";
+
+async function buscarVideos(){
+
+  let res = await fetch("https://jukebox-bot-production.up.railway.app/buscar?q=" + currentQuery + "&pageToken=" + nextPageToken);
+
+  let data = await res.json();
+
+  nextPageToken = data.nextPageToken;
+
+  let container = document.getElementById("results");
+
+  data.items.forEach(item => {
+
+    let div = document.createElement("div");
+    div.className = "result";
+
+    div.innerHTML = `
+      <div style="display:flex; gap:10px;">
+        <img src="${item.snippet.thumbnails.medium.url}" style="width:120px;">
+        <div>
+          <p>${item.snippet.title}</p>
+          <small>${item.snippet.channelTitle}</small>
+        </div>
+      </div>
+    `;
+
+    div.onclick = () => seleccionar(item);
+    container.appendChild(div);
+  });
+
+}
 
 </script>
 
