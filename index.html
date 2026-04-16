@@ -657,38 +657,6 @@ document.getElementById("search").addEventListener("keypress", async function(e)
 
 });
 
-let nextPageToken = "";
-
-async function buscarVideos(){
-
-  let res = await fetch("https://jukebox-bot-production.up.railway.app/buscar?q=" + currentQuery + "&pageToken=" + nextPageToken);
-
-  let data = await res.json();
-
-  nextPageToken = data.nextPageToken;
-
-  let container = document.getElementById("results");
-
-  data.items.forEach(item => {
-
-    let div = document.createElement("div");
-    div.className = "result";
-
-    div.innerHTML = `
-      <div style="display:flex; gap:10px;">
-        <img src="${item.snippet.thumbnails.medium.url}" style="width:120px;">
-        <div>
-          <p>${item.snippet.title}</p>
-          <small>${item.snippet.channelTitle}</small>
-        </div>
-      </div>
-    `;
-
-    div.onclick = () => seleccionar(item);
-    container.appendChild(div);
-  });
-
-}
 
 </script>
 
