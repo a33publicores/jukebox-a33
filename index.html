@@ -534,8 +534,8 @@ async function registrar(){
 // LOGIN CON VALIDACIÓN
 async function login(){
 
-  let email = document.getElementById("loginEmail").value;
-  let password = document.getElementById("loginPassword").value;
+  let email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  let password = document.getElementById("loginPassword").value.trim();
 
   if(!email || !password){
     alert("⚠️ Ingresa correo y contraseña");
@@ -551,9 +551,11 @@ async function login(){
     })
   });
 
-  let text = await res.text();
+let text = await res.text();
 
-  if(text === "OK"){
+console.log("RESPUESTA LOGIN:", text);
+
+if(text.trim().toUpperCase() === "OK"){
     document.getElementById("login").style.display = "none";
     document.getElementById("jukebox").style.display = "block";
   } else {
