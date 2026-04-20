@@ -579,8 +579,11 @@ async function login(){
 
   try {
 
-    let res = await fetch(URL, {
+    let res = await fetch(BACKEND, {
       method:"POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         tipo:"login",
         telefono
