@@ -325,8 +325,6 @@ async function seleccionar(item){
   document.getElementById("seleccionActual").innerHTML =
     "🎵 Seleccionaste: " + item.snippet.title;
 
-  let telefono = localStorage.getItem("telefono");
-
   if(!telefono){
     alert("Debes ingresar tu número primero");
     return;
@@ -430,7 +428,7 @@ async function login(){
 
     console.log("Respuesta:", text);
 
-    if(text.trim().toUpperCase() === "OK"){
+    if(text && text.includes("OK")){
 
       localStorage.setItem("telefono", telefono);
 
@@ -541,6 +539,7 @@ window.onload = function(){
   let tel = localStorage.getItem("telefono");
 
   if(tel){
+    document.getElementById("bienvenida").style.display = "none";
     document.getElementById("login").style.display = "none";
     document.getElementById("jukebox").style.display = "block";
   }
