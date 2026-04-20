@@ -439,16 +439,13 @@ async function seleccionar(item){
   document.getElementById("seleccionActual").innerHTML =
     "🎵 Seleccionaste: " + item.snippet.title;
 
-  // 🔥 ya no usamos email → usamos teléfono guardado
   let telefono = localStorage.getItem("telefono");
 
-  // 🔒 validación
   if(!telefono){
     alert("Debes ingresar tu número primero");
     return;
   }
 
-  // 🔥 CONFIRMACIÓN ANTES DE ENVIAR
   let confirmar = confirm("¿Deseas agregar esta canción?\n\n" + item.snippet.title);
 
   if(!confirmar){
@@ -457,11 +454,14 @@ async function seleccionar(item){
 
   try {
 
-    let res = await fetch(URL, {
+    let res = await fetch(BACKEND, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         tipo: "cancion",
-        telefono: telefono,   // 🔥 CLAVE
+        telefono: telefono,
         titulo: item.snippet.title,
         canal: item.snippet.channelTitle,
         videoId: item.id.videoId
