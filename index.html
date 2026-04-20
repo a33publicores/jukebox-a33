@@ -311,7 +311,7 @@ async function buscarConRotacion(query){
     let key = API_KEYS[apiIndex];
 
     try{
-      let res = await fetch("https://TU-APP.railway.app/buscar?q=" + query);
+      let res = await fetch("https://jukebox-bot-production.up.railway.app/buscar?q=" + query);
       let data = await res.json();
 
       if(!data.error){
@@ -376,6 +376,7 @@ async function buscarOptimizado(query){
 
 const API_KEY = "AIzaSyDWez-XOlSj-L1vw8iP2R3P2DfFFgEMLRI";
 const URL = "https://script.google.com/macros/s/AKfycbwHewX4IVzfRZedlINcQ3obMb66rOjfGuxp8fToNy_vppKLPlv1H6sJ8kF_wp_DbbSJdA/exec";
+const BACKEND = "https://jukebox-bot-production.up.railway.app";
 
 let nextPageToken = "";
 let currentQuery = "";
@@ -396,7 +397,7 @@ document.getElementById("search").addEventListener("keydown", async function(e){
     currentQuery = query;
     nextPageToken = "";
 
-    let res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=10&key=${API_KEY}`);
+    let res = await fetch(`${BACKEND}/buscar?q=${query}&pageToken=${nextPageToken || ""}`);
     let data = await res.json();
 
     let container = document.getElementById("results");
