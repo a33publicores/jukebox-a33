@@ -403,33 +403,35 @@ document.getElementById("search").addEventListener("keydown", async function(e){
     let res = await fetch(`${BACKEND}/buscar?q=${query}&pageToken=${nextPageToken || ""}`);
     let data = await res.json();
 
-    let container = document.getElementById("results");
-    container.innerHTML = "";
+    console.log("DATA:", data);
 
-    data.items.forEach(item => {
-        let div = document.createElement("div");
-        div.className = "result";
+let container = document.getElementById("results");
+container.innerHTML = "";
 
-        div.innerHTML = `
-        <div style="display:flex; align-items:center; gap:15px;">
+if (!data.items || data.items.length === 0) {
+    container.innerHTML = "<p>No se encontraron resultados</p>";
+    return;
+}
 
-          <img src="${item.snippet.thumbnails.medium.url}" 
-               style="width:120px; height:70px; object-fit:cover; border-radius:8px;">
+data.items.forEach(item => {
 
-          <div style="text-align:left;">
-            <p style="margin:0;">${item.snippet.title}</p>
-            <small>${item.snippet.channelTitle}</small>
-          </div>
+    let div = document.createElement("div");
+    div.className = "result";
 
+    div.innerHTML = `
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <img src="${item.snippet.thumbnails.medium.url}" 
+                 style="width:120px; border-radius:8px;">
+            <div>
+                <p style="margin:0; font-weight:bold;">${item.snippet.title}</p>
+                <small>${item.snippet.channelTitle}</small>
+            </div>
         </div>
-        `;
+    `;
 
-        div.onclick = () => seleccionar(item);
-        container.appendChild(div);
-    });
+    div.onclick = () => seleccionar(item);
 
-    // 👇 NUEVO (GUARDAR TOKEN)
-    nextPageToken = data.nextPageToken;
+    container.appendChild(div);
 });
 
 async function seleccionar(item){
