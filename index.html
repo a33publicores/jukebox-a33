@@ -381,12 +381,18 @@ let nextPageToken = "";
 let currentQuery = "";
 
 
-document.getElementById("search").addEventListener("keyup", async function(e){
-    let query = e.target.value;
+document.getElementById("search").addEventListener("keydown", async function(e){
+
+    // 🔥 SOLO ENTER
+    if(e.key !== "Enter") return;
+
+    e.preventDefault();
+
+    let query = e.target.value.trim();
 
     if(query.length < 3) return;
 
-    // 👇 NUEVO
+    // 👇 NUEVO (SE MANTIENE)
     currentQuery = query;
     nextPageToken = "";
 
