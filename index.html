@@ -189,7 +189,7 @@ body {
 <img src="https://lh3.googleusercontent.com/d/1ex-5k_ud_5OMAsraj0HHZWIrJFjgW4PA" class="logo">
 <div id="espuma"></div>
 
-<div id="registro">
+<div id="registro" style="display:none;">
 
 <h2>Registrate</h2>
 
@@ -227,11 +227,19 @@ body {
 
 <h2>Login</h2>
 
-<input id="loginEmail" placeholder="Correo"><br>
-<input id="loginPassword" type="password" placeholder="Contraseña"><br>
+<div id="login" style="display:none;">
 
-<button onclick="login()">Ingresar</button>
-<button onclick="volverRegistro()">⬅ Volver</button>
+  <h2>Ingresa tu número</h2>
+
+  <input 
+    id="telefonoLogin" 
+    placeholder="Ingresa tu número" 
+    type="tel"
+  >
+
+  <br><br>
+
+  <button onclick="login()">Entrar</button>
 
 </div>
 
@@ -369,7 +377,7 @@ async function buscarOptimizado(query){
 
 
 const API_KEY = "AIzaSyDWez-XOlSj-L1vw8iP2R3P2DfFFgEMLRI";
-const URL = "https://script.google.com/macros/s/AKfycbzM-9dB6R2NBZRSBZgShBGdDczlc8cy3uUeYW0mlHO2zpiafrxhmLsosct8gAI7S_JoHw/exec";
+const URL = "https://script.google.com/macros/s/AKfycbwHewX4IVzfRZedlINcQ3obMb66rOjfGuxp8fToNy_vppKLPlv1H6sJ8kF_wp_DbbSJdA/exec";
 
 let nextPageToken = "";
 let currentQuery = "";
@@ -419,36 +427,54 @@ document.getElementById("search").addEventListener("keyup", async function(e){
 async function seleccionar(item){
 
   document.getElementById("seleccionActual").innerHTML =
-"🎵 Seleccionaste: " + item.snippet.title;
+    "🎵 Seleccionaste: " + item.snippet.title;
 
-    let usuario = document.getElementById("loginEmail").value;
+  // 🔥 ya no usamos email → usamos teléfono guardado
+  let telefono = localStorage.getItem("telefono");
 
-    // 🔥 CONFIRMACIÓN ANTES DE ENVIAR
-    let confirmar = confirm("¿Deseas agregar esta canción?\n\n" + item.snippet.title);
+  // 🔒 validación
+  if(!telefono){
+    alert("Debes ingresar tu número primero");
+    return;
+  }
 
-    if(!confirmar){
-        return; // ❌ si cancela, no hace nada
-    }
+  // 🔥 CONFIRMACIÓN ANTES DE ENVIAR
+  let confirmar = confirm("¿Deseas agregar esta canción?\n\n" + item.snippet.title);
+
+  if(!confirmar){
+    return;
+  }
+
+  try {
 
     let res = await fetch(URL, {
-        method: "POST",
-        body: JSON.stringify({
-            tipo: "cancion",
-            usuario: usuario,
-            titulo: item.snippet.title,
-            canal: item.snippet.channelTitle,
-            videoId: item.id.videoId
-        })
+      method: "POST",
+      body: JSON.stringify({
+        tipo: "cancion",
+        telefono: telefono,   // 🔥 CLAVE
+        titulo: item.snippet.title,
+        canal: item.snippet.channelTitle,
+        videoId: item.id.videoId
+      })
     });
 
     let text = await res.text();
 
     if(text === "LIMITE"){
-        alert("🚫 Alcanzaste el límite de 15 canciones por hoy");
-        return;
+      alert("🚫 Alcanzaste el límite de 15 canciones por hoy");
+      return;
     }
 
-    alert("✅ Canción agregada");
+    if(text === "OK"){
+      alert("✅ Canción agregada");
+    } else {
+      alert("❌ Error al agregar canción");
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert("❌ Error de conexión");
+  }
 }
 
 async function buscarVideos(reset = false){
@@ -534,37 +560,47 @@ async function registrar(){
 // LOGIN CON VALIDACIÓN
 async function login(){
 
-  let email = document.getElementById("loginEmail").value.trim().toLowerCase();
-  let password = document.getElementById("loginPassword").value.trim();
+  let telefono = document.getElementById("telefonoLogin").value.trim();
 
-  if(!email || !password){
-    alert("⚠️ Ingresa correo y contraseña");
+  if(telefono.length < 8){
+    alert("Número inválido");
     return;
   }
 
-  let res = await fetch(URL, {
-    method:"POST",
-    body: JSON.stringify({
-      tipo:"login",
-      email,
-      password
-    })
-  });
+  try {
 
-let text = await res.text();
+    let res = await fetch(URL, {
+      method:"POST",
+      body: JSON.stringify({
+        tipo:"login",
+        telefono
+      })
+    });
 
-console.log("RESPUESTA LOGIN:", text);
+    let text = await res.text();
 
-if(text.trim().toUpperCase() === "OK"){
-    document.getElementById("login").style.display = "none";
-    document.getElementById("jukebox").style.display = "block";
-  } else {
-    alert("❌ Datos incorrectos");
+    console.log("Respuesta:", text);
+
+    if(text.trim().toUpperCase() === "OK"){
+
+      localStorage.setItem("telefono", telefono);
+
+      document.getElementById("login").style.display = "none";
+      document.getElementById("jukebox").style.display = "block";
+
+    } else {
+      alert("Error al ingresar");
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert("Error de conexión");
   }
 }
 
 function entrar(){
   document.getElementById("bienvenida").style.display = "none";
+  document.getElementById("login").style.display = "block";
 }
 
 function volverRegistro(){
@@ -659,6 +695,16 @@ document.getElementById("search").addEventListener("keypress", async function(e)
 
 });
 
+window.onload = function(){
+
+  let tel = localStorage.getItem("telefono");
+
+  if(tel){
+    document.getElementById("login").style.display = "none";
+    document.getElementById("jukebox").style.display = "block";
+  }
+
+};
 
 </script>
 
