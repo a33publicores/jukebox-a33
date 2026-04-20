@@ -424,20 +424,21 @@ async function login(){
       })
     });
 
-    let text = await res.text();
+let text = await res.text();
 
-    console.log("Respuesta:", text);
+console.log("RESPUESTA LOGIN:", text);
 
-    if(text && text.includes("OK")){
+if(text.toLowerCase().includes("ok")){
 
-      localStorage.setItem("telefono", telefono);
+  localStorage.setItem("telefono", telefono);
 
-      document.getElementById("login").style.display = "none";
-      document.getElementById("jukebox").style.display = "block";
+  document.getElementById("bienvenida").style.display = "none";
+  document.getElementById("login").style.display = "none";
+  document.getElementById("jukebox").style.display = "block";
 
-    } else {
-      alert("Error al ingresar");
-    }
+} else {
+  alert("Error al ingresar: " + text);
+}
 
   } catch (error) {
     console.error(error);
