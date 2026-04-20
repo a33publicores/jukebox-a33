@@ -226,17 +226,6 @@ body {
 
 <script>
 
-// 🔥 API KEYS
-const API_KEYS = [
-  "AIzaSyATYQhdszUE85yySE_-8W7H6ZeEHy9asyc",//1
-  "AIzaSyDagSxVL_m1LcM-aN_X82tQuRpGVKBAC1w",//2
-  "AIzaSyB3fIov7kM9W68AXW8AUx2OfVIjWbozKtU",//3
-  "AIzaSyD8Bi-jZKzR67BvLEFwIXHnb3nklHSa-zU",//4
-  "AIzaSyDm5JTMD_KTJtNe8aKMr41v07a066s8C0Q",//5
-  "AIzaSyCoynrZ6NgSVkFuFtjyvsc_MCsPFP3bKaA",//6
-];
-
-let apiIndex = 0;
 
 // 🔥 CACHE
 let cache = {};
@@ -270,75 +259,6 @@ function obtenerCache(query){
   }
 
   return null;
-}
-
-async function buscarConRotacion(query){
-
-  for(let i = 0; i < API_KEYS.length; i++){
-
-    let key = API_KEYS[apiIndex];
-
-    try{
-      let res = await fetch("https://jukebox-bot-production.up.railway.app/buscar?q=" + query);
-      let data = await res.json();
-
-      if(!data.error){
-        return data;
-      }
-
-      if(data.error.message.includes("quota") || data.error.code === 403){
-        apiIndex = (apiIndex + 1) % API_KEYS.length;
-      }
-
-    } catch(e){
-      apiIndex = (apiIndex + 1) % API_KEYS.length;
-    }
-  }
-
-  alert("🚫 APIs agotadas");
-  return null;
-}
-
-async function buscarOptimizado(query){
-
-  query = normalizar(query);
-
-  if(query.length < 5){
-    alert("Escribe mejor la canción");
-    return;
-  }
-
-  if(Date.now() - ultimoTiempo < 3000){
-    alert("Espera 3 segundos");
-    return;
-  }
-
-  ultimoTiempo = Date.now();
-
-  if(busquedas >= 4){
-    alert("Límite de búsquedas alcanzado");
-    return;
-  }
-
-  busquedas++;
-  localStorage.setItem("busquedas", busquedas);
-
-  if(cache[query]) return cache[query];
-
-  let local = obtenerCache(query);
-  if(local){
-    cache[query] = local;
-    return local;
-  }
-
-  let data = await buscarConRotacion(query);
-
-  if(data){
-    cache[query] = data;
-    guardarCache(query, data);
-  }
-
-  return data;
 }
 
 
