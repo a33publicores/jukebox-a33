@@ -200,9 +200,9 @@ body {
 
   <h2>Login</h2>
 
-  <h3>Ingresa tu número</h3>
+  <h3>Ingresa con tu número de Teléfono</h3>
 
-  <input id="telefono" placeholder="Ingresa con tu número de Teléfono">
+  <input id="telefono" placeholder="Ingresa tu número">
 
   <br><br>
 
@@ -411,6 +411,8 @@ async function buscarVideos(){
 // LOGIN CON VALIDACIÓN
 async function login(){
 
+  console.log("🔥 CLICK LOGIN");
+
   let telefono = document.getElementById("telefono").value.trim();
 
   if(!telefono){
@@ -419,6 +421,8 @@ async function login(){
   }
 
   try {
+
+    console.log("📡 ENVIANDO A BACKEND...");
 
     let res = await fetch(BACKEND, {
       method: "POST",
@@ -431,24 +435,32 @@ async function login(){
       })
     });
 
+    console.log("📥 RESPUESTA RECIBIDA");
+
     let text = await res.text();
 
-    console.log("LOGIN RESPUESTA:", text);
+    console.log("🧾 RESPUESTA:", text);
 
     if(text && text.toLowerCase().includes("ok")){
 
-      // 🔥 CAMBIO DE PANTALLA
+      console.log("✅ LOGIN OK");
+
+      localStorage.setItem("telefono", telefono);
+
       document.getElementById("bienvenida").style.display = "none";
       document.getElementById("login").style.display = "none";
       document.getElementById("jukebox").style.display = "block";
 
     } else {
+      console.log("❌ LOGIN FALLÓ");
       alert("Error al ingresar: " + text);
     }
 
   } catch (error) {
-    console.error(error);
+
+    console.error("💥 ERROR FETCH:", error);
     alert("Error de conexión");
+
   }
 }
 
