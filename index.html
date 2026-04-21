@@ -581,7 +581,7 @@ function logout() {
   alert("Sesión cerrada");
 }
 
-document.getElementById("search").addEventListener("keydown", function(e) {
+document.getElementById("search").addEventListener("keypress", function(e) {
   if (e.key === "Enter") {
     buscarVideos();
   }
