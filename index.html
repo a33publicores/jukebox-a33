@@ -386,9 +386,20 @@ async function seleccionar(item){
 
 async function buscarVideos(){
 
-  try {
+  let input = document.getElementById("search");
+  let query = input.value.trim();
 
-    let res = await fetch(`${BACKEND}/buscar?q=${currentQuery}&pageToken=${nextPageToken}`);
+  if(query.length < 3){
+    alert("Escribe al menos 3 letras");
+    return;
+  }
+
+    // 🔥 actualizar variable global
+    currentQuery = query;
+
+    nextPageToken = null; // reset cuando es nueva búsqueda
+
+    let res = await fetch(`${BACKEND}/buscar?q=${query}&pageToken=${nextPageToken}`);
     let data = await res.json();
 
     let container = document.getElementById("results");
