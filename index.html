@@ -426,6 +426,12 @@ async function login(){
     return;
   }
 
+  localStorage.setItem("telefono", telefono); // 🔥 CLAVE
+  document.getElementById("login").style.display = "none";
+  document.getElementById("jukebox").style.display = "block";
+
+  document.getElementById("usuarioActivo").innerText =
+    "👤 " + telefono; 
   try {
 
     console.log("📡 ENVIANDO A BACKEND...");
