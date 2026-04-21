@@ -413,7 +413,7 @@ async function login(){
 
   try {
 
-    let res = await fetch(BACKEND, {
+    let res = await fetch(`${BACKEND}/login`, {
       method:"POST",
       headers: {
         "Content-Type": "application/json"
