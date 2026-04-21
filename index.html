@@ -195,11 +195,7 @@ body {
 
   <h2>Ingresa tu número</h2>
 
-  <input 
-    id="telefonoLogin" 
-    placeholder="Ingresa tu número" 
-    type="tel"
-  >
+ <input id="telefono" placeholder="Ingresa tu número">
 
   <br><br>
 
@@ -404,41 +400,40 @@ async function buscarVideos(){
 // LOGIN CON VALIDACIÓN
 async function login(){
 
-  let telefono = document.getElementById("telefonoLogin").value.trim();
+  let telefono = document.getElementById("telefono").value.trim();
 
-  if(telefono.length < 8){
-    alert("Número inválido");
+  if(!telefono){
+    alert("Ingresa tu número");
     return;
   }
 
   try {
 
-    let res = await fetch(`${BACKEND}/login`, {
-      method:"POST",
+    let res = await fetch(BACKEND, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        tipo:"login",
-        telefono
+        tipo: "login",
+        telefono: telefono
       })
     });
 
-let text = await res.text();
+    let text = await res.text();
 
-console.log("RESPUESTA LOGIN:", text);
+    console.log("LOGIN RESPUESTA:", text);
 
-if(text.toLowerCase().includes("ok")){
+    if(text && text.toLowerCase().includes("ok")){
 
-  localStorage.setItem("telefono", telefono);
+      // 🔥 CAMBIO DE PANTALLA
+      document.getElementById("bienvenida").style.display = "none";
+      document.getElementById("login").style.display = "none";
+      document.getElementById("jukebox").style.display = "block";
 
-  document.getElementById("bienvenida").style.display = "none";
-  document.getElementById("login").style.display = "none";
-  document.getElementById("jukebox").style.display = "block";
-
-} else {
-  alert("Error al ingresar: " + text);
-}
+    } else {
+      alert("Error al ingresar: " + text);
+    }
 
   } catch (error) {
     console.error(error);
