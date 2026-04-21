@@ -223,7 +223,7 @@ body {
 
   <input type="text" id="search" placeholder="Busca canción o artista">
   
-  <button onclick="buscarVideos()">🔍 Buscar</button>
+  <button onclick="buscarVideos(true)">🔍 Buscar</button>
 
   <div id="seleccionActual" style="margin:10px; color:#FFD700;"></div>
 
@@ -384,19 +384,47 @@ async function seleccionar(item){
   }
 }
 
-async function buscarVideos(){
+async function buscarVideos(reset = false){
 
   try {
 
-    let res = await fetch(`${BACKEND}/buscar?q=${currentQuery}&pageToken=${nextPageToken}`);
+    // 🔥 SI ES NUEVA BÚSQUEDA (botón buscar o ENTER)
+    if (reset) {
+      let input = document.getElementById("search");
+
+      if (!input) {
+        alert("Error: input no encontrado");
+        return;
+      }
+
+      let query = input.value.trim();
+
+      if (query.length < 3) {
+        alert("Escribe al menos 3 letras");
+        return;
+      }
+
+      currentQuery = query;
+      nextPageToken = null;
+
+      document.getElementById("results").innerHTML = ""; // limpiar
+    }
+
+    // 🔥 SI NO HAY QUERY (evita romper app)
+    if (!currentQuery) {
+      alert("Primero escribe algo para buscar");
+      return;
+    }
+
+    let res = await fetch(`${BACKEND}/buscar?q=${currentQuery}&pageToken=${nextPageToken || ""}`);
     let data = await res.json();
 
     let container = document.getElementById("results");
 
-    // 🔥 VALIDACIÓN CLAVE (ARREGLA TU ERROR)
+    // 🔥 VALIDACIÓN
     if (!data.items || !Array.isArray(data.items)) {
       console.error("❌ items inválidos:", data);
-      alert("❌ Error en la búsqueda, intenta de nuevo");
+      alert("Error en la búsqueda, intenta de nuevo");
       return;
     }
 
@@ -423,7 +451,7 @@ async function buscarVideos(){
 
   } catch (error) {
     console.error("❌ ERROR FETCH:", error);
-    alert("❌ Error de conexión");
+    alert("Error de conexión");
   }
 }
 
