@@ -425,13 +425,6 @@ async function login(){
     alert("Número inválido");
     return;
   }
-
-  localStorage.setItem("telefono", telefono); // 🔥 CLAVE
-  document.getElementById("login").style.display = "none";
-  document.getElementById("jukebox").style.display = "block";
-
-  document.getElementById("usuarioActivo").innerText =
-    "👤 " + telefono; 
   try {
 
     console.log("📡 ENVIANDO A BACKEND...");
@@ -462,6 +455,8 @@ async function login(){
       document.getElementById("bienvenida").style.display = "none";
       document.getElementById("login").style.display = "none";
       document.getElementById("jukebox").style.display = "block";
+      document.getElementById("usuarioActivo").innerText =
+    "👤 " + telefono;
 
     } else {
       console.log("❌ LOGIN FALLÓ");
