@@ -234,13 +234,6 @@ body {
 
 <script>
 
-  document.getElementById("search").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-      buscarVideos();
-    }
-  });
-
-
 // 🔥 CACHE
 let cache = {};
 
@@ -595,6 +588,13 @@ function logout() {
 
   alert("Sesión cerrada");
 }
+
+  document.getElementById("search").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+      buscarVideos();
+    }
+  });
+
 
 </script>
 
