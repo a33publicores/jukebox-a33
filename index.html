@@ -176,26 +176,33 @@ body {
   <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1ex-5k_ud_5OMAsraj0HHZWIrJFjgW4PA" class="logo">
 </div>
 
+<!-- ========================= -->
+<!-- 🔥 BIENVENIDA -->
+<!-- ========================= -->
 <div id="bienvenida" class="contenedor">
 
-<img src="https://lh3.googleusercontent.com/d/1ex-5k_ud_5OMAsraj0HHZWIrJFjgW4PA" class="logo">
-<p>Bienvenido</p>
-<p>🎶 Tú eliges la música 🎶</p>
+  <img src="https://lh3.googleusercontent.com/d/1ex-5k_ud_5OMAsraj0HHZWIrJFjgW4PA" class="logo">
 
-<button onclick="entrar()">Entrar</button>
+  <p>Bienvenido</p>
+  <p>🎶 Tú eliges la música 🎶</p>
+
+  <button onclick="entrar()">Entrar</button>
 
 </div>
 
-<img src="https://lh3.googleusercontent.com/d/1ex-5k_ud_5OMAsraj0HHZWIrJFjgW4PA" class="logo">
-<div id="espuma"></div>
 
-<h2>Login</h2>
+<!-- ========================= -->
+<!-- 🔥 LOGIN (OCULTO) -->
+<!-- ========================= -->
+<div id="login" style="display:none;" class="contenedor">
 
-<div id="login">
+  <img src="https://lh3.googleusercontent.com/d/1ex-5k_ud_5OMAsraj0HHZWIrJFjgW4PA" class="logo">
 
-  <h2>Ingresa tu número</h2>
+  <h2>Login</h2>
 
- <input id="telefono" placeholder="Ingresa tu número">
+  <h3>Ingresa tu número</h3>
+
+  <input id="telefono" placeholder="Ingresa con tu número de Teléfono">
 
   <br><br>
 
@@ -204,19 +211,23 @@ body {
 </div>
 
 
+<!-- ========================= -->
+<!-- 🔥 JUKEBOX -->
+<!-- ========================= -->
 <div id="jukebox" style="display:none;">
-<p id="usuarioActivo" style="color:#FFD700;"></p>
-<button onclick="logout()">Cerrar sesión</button>
 
-<h1>🎵 Pide tu canción</h1>
+  <p id="usuarioActivo" style="color:#FFD700;"></p>
+  <button onclick="logout()">Cerrar sesión</button>
 
-<input type="text" id="search" placeholder="Busca canción o artista">
+  <h1>🎵 Pide tu canción</h1>
 
-<div id="seleccionActual" style="margin:10px; color:#FFD700;"></div>
+  <input type="text" id="search" placeholder="Busca canción o artista">
 
-<div id="results"></div>
+  <div id="seleccionActual" style="margin:10px; color:#FFD700;"></div>
 
-<button onclick="buscarVideos()">Ver más 🔽</button>
+  <div id="results"></div>
+
+  <button onclick="buscarVideos()">Ver más 🔽</button>
 
 </div>
 
