@@ -346,18 +346,18 @@ async function seleccionar(item){
   try {
 
     let res = await fetch(BACKEND, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        tipo: "cancion",
-        telefono: telefono,
-        titulo: item.snippet.title,
-        canal: item.snippet.channelTitle,
-        videoId: item.id.videoId
-      })
-    });
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      tipo: "cancion",
+      telefono: telefono,
+      titulo: item.snippet.title,
+      canal: item.snippet.channelTitle,
+      videoId: item.id.videoId
+    })
+  });
 
     let text = await res.text();
 
