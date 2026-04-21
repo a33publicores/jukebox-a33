@@ -386,31 +386,45 @@ async function seleccionar(item){
 
 async function buscarVideos(){
 
-  let res = await fetch(`${BACKEND}/buscar?q=${currentQuery}&pageToken=${nextPageToken}`);
-  let data = await res.json();
+  try {
 
-  let container = document.getElementById("results");
+    let res = await fetch(`${BACKEND}/buscar?q=${currentQuery}&pageToken=${nextPageToken}`);
+    let data = await res.json();
 
-  data.items.forEach(item => {
+    let container = document.getElementById("results");
 
-    let div = document.createElement("div");
-    div.className = "result";
+    // 🔥 VALIDACIÓN CLAVE (ARREGLA TU ERROR)
+    if (!data.items || !Array.isArray(data.items)) {
+      console.error("❌ items inválidos:", data);
+      alert("❌ Error en la búsqueda, intenta de nuevo");
+      return;
+    }
 
-    div.innerHTML = `
-      <div style="display:flex; gap:10px;">
-        <img src="${item.snippet.thumbnails.medium.url}" style="width:120px;">
-        <div>
-          <p>${item.snippet.title}</p>
-          <small>${item.snippet.channelTitle}</small>
+    data.items.forEach(item => {
+
+      let div = document.createElement("div");
+      div.className = "result";
+
+      div.innerHTML = `
+        <div style="display:flex; gap:10px;">
+          <img src="${item.snippet.thumbnails.medium.url}" style="width:120px;">
+          <div>
+            <p>${item.snippet.title}</p>
+            <small>${item.snippet.channelTitle}</small>
+          </div>
         </div>
-      </div>
-    `;
+      `;
 
-    div.onclick = () => seleccionar(item);
-    container.appendChild(div);
-  });
+      div.onclick = () => seleccionar(item);
+      container.appendChild(div);
+    });
 
-  nextPageToken = data.nextPageToken;
+    nextPageToken = data.nextPageToken;
+
+  } catch (error) {
+    console.error("❌ ERROR FETCH:", error);
+    alert("❌ Error de conexión");
+  }
 }
 
 
