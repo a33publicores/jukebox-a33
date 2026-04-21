@@ -332,6 +332,10 @@ async function seleccionar(item){
   document.getElementById("seleccionActual").innerHTML =
     "🎵 Seleccionaste: " + item.snippet.title;
 
+  // 🔥 OBTENER TELÉFONO CORRECTAMENTE
+  let telefono = String(localStorage.getItem("telefono") || "").trim();
+
+  // 🔒 VALIDACIÓN
   if(!telefono){
     alert("Debes ingresar tu número primero");
     return;
@@ -346,34 +350,36 @@ async function seleccionar(item){
   try {
 
     let res = await fetch(BACKEND, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      tipo: "cancion",
-      telefono: telefono,
-      titulo: item.snippet.title,
-      canal: item.snippet.channelTitle,
-      videoId: item.id.videoId
-    })
-  });
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        tipo: "cancion",
+        telefono: telefono,   // 🔥 YA CORRECTO
+        titulo: item.snippet.title,
+        canal: item.snippet.channelTitle,
+        videoId: item.id.videoId
+      })
+    });
 
     let text = await res.text();
+
+    console.log("RESPUESTA BACKEND:", text); // 🔥 DEBUG
 
     if(text === "LIMITE"){
       alert("🚫 Alcanzaste el límite de 15 canciones por hoy");
       return;
     }
 
-    if(text === "OK"){
+    if(text && text.toLowerCase().includes("ok")){
       alert("✅ Canción agregada");
     } else {
       alert("❌ Error al agregar canción");
     }
 
   } catch (error) {
-    console.error(error);
+    console.error("ERROR FETCH:", error);
     alert("❌ Error de conexión");
   }
 }
