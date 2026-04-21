@@ -222,6 +222,7 @@ body {
   <h1>🎵 Pide tu canción</h1>
 
   <input type="text" id="search" placeholder="Busca canción o artista">
+  <button onclick="buscarVideos()">🔍 Buscar</button>
 
   <div id="seleccionActual" style="margin:10px; color:#FFD700;"></div>
 
@@ -232,6 +233,12 @@ body {
 </div>
 
 <script>
+
+  document.getElementById("search").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+      buscarVideos();
+    }
+  });
 
 
 // 🔥 CACHE
@@ -333,13 +340,12 @@ async function seleccionar(item){
     "🎵 Seleccionaste: " + item.snippet.title;
 
   // 🔥 OBTENER TELÉFONO CORRECTAMENTE
-  let telefono = String(localStorage.getItem("telefono") || "").trim();
+  let telefono = localStorage.getItem("telefono");
 
-  // 🔒 VALIDACIÓN
   if(!telefono){
     alert("Debes ingresar tu número primero");
     return;
-  }
+} 
 
   let confirmar = confirm("¿Deseas agregar esta canción?\n\n" + item.snippet.title);
 
@@ -425,6 +431,16 @@ async function login(){
     alert("Ingresa tu número");
     return;
   }
+
+  localStorage.setItem("telefono", telefono); // 🔥 CLAVE
+
+  document.getElementById("login").style.display = "none";
+  document.getElementById("jukebox").style.display = "block";
+
+  document.getElementById("usuarioActivo").innerText =
+    "👤 " + telefono;
+
+}
 
   try {
 
@@ -570,6 +586,15 @@ window.onload = function(){
   }
 
 };
+
+function logout() {
+  localStorage.removeItem("telefono");
+
+  document.getElementById("jukebox").style.display = "none";
+  document.getElementById("login").style.display = "block";
+
+  alert("Sesión cerrada");
+}
 
 </script>
 
