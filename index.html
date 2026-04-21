@@ -222,6 +222,7 @@ body {
   <h1>🎵 Pide tu canción</h1>
 
   <input type="text" id="search" placeholder="Busca canción o artista">
+  
   <button onclick="buscarVideos()">🔍 Buscar</button>
 
   <div id="seleccionActual" style="margin:10px; color:#FFD700;"></div>
@@ -418,22 +419,12 @@ async function login(){
 
   console.log("🔥 CLICK LOGIN");
 
-  let telefono = document.getElementById("telefono").value.trim();
+  let telefono = document.getElementById("telefonoLogin").value.trim();
 
-  if(!telefono){
-    alert("Ingresa tu número");
+  if(telefono.length < 8){
+    alert("Número inválido");
     return;
   }
-
-  localStorage.setItem("telefono", telefono); // 🔥 CLAVE
-
-  document.getElementById("login").style.display = "none";
-  document.getElementById("jukebox").style.display = "block";
-
-  document.getElementById("usuarioActivo").innerText =
-    "👤 " + telefono;
-
-}
 
   try {
 
@@ -589,6 +580,11 @@ function logout() {
   alert("Sesión cerrada");
 }
 
+document.getElementById("search").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    buscarVideos();
+  }
+});
 
 
 </script>
