@@ -235,6 +235,47 @@ body {
 
 <script>
 
+function mostrarMensaje(texto) {
+  let modal = document.createElement("div");
+
+  modal.innerHTML = `
+    <div style="
+      position: fixed;
+      top:0; left:0;
+      width:100%;
+      height:100%;
+      background: rgba(0,0,0,0.7);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+    ">
+      <div style="
+        background:#111;
+        color:#fff;
+        padding:20px;
+        border-radius:12px;
+        text-align:center;
+        max-width:300px;
+      ">
+        <p>${texto}</p>
+        <button onclick="this.parentElement.parentElement.remove()"
+          style="
+            margin-top:10px;
+            padding:10px;
+            background:gold;
+            border:none;
+            border-radius:8px;
+          ">
+          OK
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+}
+
 // 🔥 CACHE
 let cache = {};
 
@@ -337,11 +378,11 @@ async function seleccionar(item){
   let telefono = localStorage.getItem("telefono");
 
   if(!telefono){
-    alert("Debes ingresar tu número primero");
+    mostrarMensaje("Debes ingresar tu número primero");
     return;
 } 
 
-  let confirmar = confirm("¿Deseas agregar esta canción?\n\n" + item.snippet.title);
+  let confirmar = true;
 
   if(!confirmar){
     return;
@@ -368,19 +409,19 @@ async function seleccionar(item){
     console.log("RESPUESTA BACKEND:", text); // 🔥 DEBUG
 
     if(text === "LIMITE"){
-      alert("🚫 Alcanzaste el límite de 15 canciones por hoy");
+      mostrarMensaje("🚫 Alcanzaste el límite de 15 canciones por hoy");
       return;
     }
 
     if(text && text.toLowerCase().includes("ok")){
-      alert("✅ Canción agregada");
+      mostrarMensaje("✅ Canción agregada");
     } else {
-      alert("❌ Error al agregar canción");
+      mostrarMensaje("❌ Error al agregar canción");
     }
 
   } catch (error) {
     console.error("ERROR FETCH:", error);
-    alert("❌ Error de conexión");
+    mostrarMensaje("❌ Error de conexión");
   }
 }
 
@@ -393,14 +434,14 @@ async function buscarVideos(reset = false){
       let input = document.getElementById("search");
 
       if (!input) {
-        alert("Error: input no encontrado");
+        mostrarMensaje("Error: input no encontrado");
         return;
       }
 
       let query = input.value.trim();
 
       if (query.length < 3) {
-        alert("Escribe al menos 3 letras");
+        mostrarMensaje("Escribe al menos 3 letras");
         return;
       }
 
@@ -412,7 +453,7 @@ async function buscarVideos(reset = false){
 
     // 🔥 SI NO HAY QUERY (evita romper app)
     if (!currentQuery) {
-      alert("Primero escribe algo para buscar");
+      mostrarMensaje("Primero escribe algo para buscar");
       return;
     }
 
@@ -424,7 +465,7 @@ async function buscarVideos(reset = false){
     // 🔥 VALIDACIÓN
     if (!data.items || !Array.isArray(data.items)) {
       console.error("❌ items inválidos:", data);
-      alert("Error en la búsqueda, intenta de nuevo");
+      mostrarMensaje("Error en la búsqueda, intenta de nuevo");
       return;
     }
 
@@ -464,7 +505,7 @@ async function login(){
   let telefono = document.getElementById("telefono").value.trim();
 
   if(telefono.length < 8){
-    alert("Número inválido");
+    mostrarMensaje("Número inválido");
     return;
   }
   try {
@@ -502,13 +543,13 @@ async function login(){
 
     } else {
       console.log("❌ LOGIN FALLÓ");
-      alert("Error al ingresar: " + text);
+      mostrarMensaje("Error al ingresar: " + text);
     }
 
   } catch (error) {
 
     console.error("💥 ERROR FETCH:", error);
-    alert("Error de conexión");
+    mostrarMensaje("Error de conexión");
 
   }
 }
@@ -620,7 +661,7 @@ function logout() {
   document.getElementById("jukebox").style.display = "none";
   document.getElementById("login").style.display = "block";
 
-  alert("Sesión cerrada");
+  mostrarMensaje("Sesión cerrada");
 }
 
 document.getElementById("search").addEventListener("keypress", function(e) {
