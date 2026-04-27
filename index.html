@@ -772,7 +772,7 @@ document.getElementById("search").addEventListener("keypress", function(e) {
   }
 });
 
-function guardarCodigo(){
+async function guardarCodigo(){
 
   let codigo = document.getElementById("codigoLugar").value.trim().toUpperCase();
 
@@ -781,10 +781,28 @@ function guardarCodigo(){
     return;
   }
 
-  localStorage.setItem("cliente", codigo);
+  try {
 
-  document.getElementById("codigoCliente").style.display = "none";
-  document.getElementById("bienvenida").style.display = "block";
+    let res = await fetch(`${BACKEND}/validar_cliente?codigo=${codigo}`);
+    let data = await res.json();
+
+    if(!data.ok){
+      mostrarMensaje("❌ Código inválido");
+      return;
+    }
+
+    // ✅ guardar cliente válido
+    localStorage.setItem("cliente", codigo);
+
+    mostrarMensaje("✅ Bienvenido a " + data.nombre);
+
+    document.getElementById("codigoCliente").style.display = "none";
+    document.getElementById("bienvenida").style.display = "flex";
+
+  } catch (error){
+    console.error(error);
+    mostrarMensaje("Error validando cliente");
+  }
 }
 
 
