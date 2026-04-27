@@ -184,6 +184,8 @@ body {
 
   <button onclick="guardarCodigo()">Entrar</button>
 
+  <button onclick="cerrarSesion()">Cambiar local</button>
+
 </div>
 
 <!-- ========================= -->
@@ -803,6 +805,21 @@ async function guardarCodigo(){
     console.error(error);
     mostrarMensaje("Error validando cliente");
   }
+}
+
+function cerrarSesion(){
+
+  // ❌ eliminar datos guardados
+  localStorage.removeItem("cliente");
+  localStorage.removeItem("telefono");
+
+  // 🔄 resetear vistas
+  document.getElementById("codigoCliente").style.display = "flex";
+  document.getElementById("bienvenida").style.display = "none";
+  document.getElementById("login").style.display = "none";
+  document.getElementById("jukebox").style.display = "none";
+
+  console.log("🔓 Sesión cerrada");
 }
 
 
