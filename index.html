@@ -176,14 +176,24 @@ body {
   <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1sGeypXkuhP1o4SG6ESMiIaRTdrhIgOzi" class="logo">
 </div>
 
+<div id="codigoCliente" class="contenedor">
+
+  <h2>Ingresa código del lugar</h2>
+
+  <input id="codigoLugar" placeholder="Ej: A33">
+
+  <button onclick="guardarCodigo()">Entrar</button>
+
+</div>
+
 <!-- ========================= -->
 <!-- 🔥 BIENVENIDA -->
 <!-- ========================= -->
-<div id="bienvenida" class="contenedor">
+<div id="bienvenida" style="display:none;" class="contenedor">
 
   <img src="https://lh3.googleusercontent.com/d/1sGeypXkuhP1o4SG6ESMiIaRTdrhIgOzi" class="logo">
 
-  <p>Bienvenido</p>
+  <p>Bienvenido a PlayBar Go</p>
   <p>🎶 Tú eliges la música 🎶</p>
 
   <button onclick="entrar()">Ingresar</button>
@@ -215,6 +225,7 @@ body {
 <!-- 🔥 JUKEBOX -->
 <!-- ========================= -->
 <div id="jukebox" style="display:none;">
+
   <img src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
   <p id="usuarioActivo" style="color:#FFD700;"></p>
@@ -464,6 +475,7 @@ async function seleccionar(item){
       },
       body: JSON.stringify({
         tipo: "cancion",
+        cliente: localStorage.getItem("cliente"),
         telefono: telefono,   // 🔥 YA CORRECTO
         titulo: item.snippet.title,
         canal: item.snippet.channelTitle,
@@ -712,14 +724,37 @@ document.getElementById("search").addEventListener("keypress", async function(e)
 
 window.onload = function(){
 
-  let tel = localStorage.getItem("telefono");
+  let cliente = localStorage.getItem("cliente");
+  let telefono = localStorage.getItem("telefono");
 
-  if(tel){
+  // 🔥 1. SI NO HAY CLIENTE → PIDE CÓDIGO
+  if(!cliente){
+    document.getElementById("codigoCliente").style.display = "flex";
+    document.getElementById("bienvenida").style.display = "none";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("jukebox").style.display = "none";
+    return;
+  }
+
+  // 🔥 2. SI HAY CLIENTE PERO NO LOGIN
+  if(cliente && !telefono){
+    document.getElementById("codigoCliente").style.display = "none";
+    document.getElementById("bienvenida").style.display = "flex";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("jukebox").style.display = "none";
+    return;
+  }
+
+  // 🔥 3. SI YA ESTÁ LOGUEADO → ENTRA DIRECTO
+  if(cliente && telefono){
+    document.getElementById("codigoCliente").style.display = "none";
     document.getElementById("bienvenida").style.display = "none";
     document.getElementById("login").style.display = "none";
     document.getElementById("jukebox").style.display = "block";
-  }
 
+    document.getElementById("usuarioActivo").innerText =
+      "👤 " + telefono;
+  }
 };
 
 function logout() {
@@ -736,6 +771,21 @@ document.getElementById("search").addEventListener("keypress", function(e) {
     buscarVideos();
   }
 });
+
+function guardarCodigo(){
+
+  let codigo = document.getElementById("codigoLugar").value.trim().toUpperCase();
+
+  if(!codigo){
+    mostrarMensaje("Ingresa código");
+    return;
+  }
+
+  localStorage.setItem("cliente", codigo);
+
+  document.getElementById("codigoCliente").style.display = "none";
+  document.getElementById("bienvenida").style.display = "block";
+}
 
 
 </script>
