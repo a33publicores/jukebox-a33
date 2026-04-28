@@ -24,30 +24,41 @@
   padding: 12px 25px;
   margin-top: 10px;
   border: none;
-  border-radius: 8px;
-  background: linear-gradient(45deg, #FFD700, #FFA500);
-  color: black;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #00E5FF, #3B82F6, #A855F7);
+  color: white;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(59,130,246,0.4);
 }
 
 button:hover {
   transform: scale(1.05);
-  opacity: 0.9;
+  box-shadow: 0 0 20px rgba(168,85,247,0.8);
 }
 
 input {
   width: 80%;
   padding: 12px;
   margin: 8px;
-  border-radius: 6px;
-  border: none;
+  border-radius: 10px;
+  border: 1px solid #3B82F6;
+  background: #1e1e1e;
+  color: white;
+}
+
+input:focus {
+  outline: none;
+  border-color: #A855F7;
+  box-shadow: 0 0 8px #A855F7;
 }
 
 h2 {
   margin-top: 20px;
-  color: #FFD700;
+  background: linear-gradient(90deg, #00E5FF, #A855F7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 select {
@@ -68,7 +79,7 @@ select {
 }
 
 body {
-  background: linear-gradient(180deg, #0f0f0f, #1c1c1c);
+  background: radial-gradient(circle at center, #0f172a, #000000);
 }
 
 .result {
@@ -184,8 +195,6 @@ body {
 
   <button onclick="guardarCodigo()">Entrar</button>
 
-  
-
 </div>
 
 <!-- ========================= -->
@@ -209,7 +218,9 @@ body {
 <div id="login" style="display:none;" class="contenedor">
 
   <img src="https://lh3.googleusercontent.com/d/1sGeypXkuhP1o4SG6ESMiIaRTdrhIgOzi" class="logo">
+
   <button onclick="cerrarSesion()">Cambiar local</button>
+
   <h2>Login</h2>
 
   <h3>Ingresa con tu número de Teléfono</h3>
@@ -230,7 +241,12 @@ body {
 
   <img src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
-  <p id="usuarioActivo" style="color:#FFD700;"></p>
+  <p id="usuarioActivo" style="
+  background: linear-gradient(90deg, #00E5FF, #A855F7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+"></p>
+
   <button onclick="logout()">Cerrar sesión</button>
 
   <h1>🎵 Pide tu canción</h1>
@@ -239,7 +255,12 @@ body {
   
   <button onclick="buscarVideos(true)">🔍 Buscar</button>
 
-  <div id="seleccionActual" style="margin:10px; color:#FFD700;"></div>
+  <div id="seleccionActual" style="
+  margin:10px;
+  background: linear-gradient(90deg, #00E5FF, #A855F7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+"></div>
 
   <div id="results"></div>
 
