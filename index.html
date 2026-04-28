@@ -188,7 +188,7 @@ body {
 </div>
 
 <div id="codigoCliente" class="contenedor">
-  
+
   <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
   <h2>Ingresa código del lugar</h2>
@@ -202,7 +202,8 @@ body {
 <!-- ========================= -->
 <!-- 🔥 BIENVENIDA -->
 <!-- ========================= -->
-<div id="bienvenida" style="display:none;" class="contenedor">
+<div id="bienvenida" style="display:none;" class="contenedor"
+img id="logoCliente" style="width:120px; margin-top:10px; display:none;">
 
   <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
@@ -757,6 +758,13 @@ window.onload = function(){
 
   let cliente = localStorage.getItem("cliente");
   let telefono = localStorage.getItem("telefono");
+  let logo = localStorage.getItem("logoCliente");
+
+  if(logo){
+    let img = document.getElementById("logoCliente");
+    img.src = logo;
+    img.style.display = "block";
+}
 
   let logo = localStorage.getItem("logoCliente");
 
@@ -820,6 +828,7 @@ async function guardarCodigo(){
 
     // ✅ guardar cliente válido
     localStorage.setItem("cliente", codigo);
+    localStorage.setItem("logoCliente", data.logo || "");
     localStorage.setItem("logoCliente", data.logo || "");
 
     mostrarMensaje("✅ Bienvenido a " + data.nombre);
