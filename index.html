@@ -206,6 +206,8 @@ body {
 
   <img src="https://lh3.googleusercontent.com/d/1sGeypXkuhP1o4SG6ESMiIaRTdrhIgOzi" class="logo">
 
+  <img id="logoCliente" style="width:120px; border-radius:12px; display:none;">
+
   <p>Bienvenido a PlayBar Go</p>
   <p>🎶 Tú eliges la música 🎶</p>
 
@@ -302,7 +304,9 @@ function mostrarConfirm(texto) {
           <button id="btnAceptar" style="
             margin-top:10px;
             padding:10px;
-            background:gold;
+            background: linear-gradient(135deg, #00E5FF, #3B82F6, #A855F7);
+            color: white;
+            box-shadow: 0 0 10px rgba(59,130,246,0.6);
             border:none;
             border-radius:8px;
             margin-right:10px;
@@ -364,7 +368,9 @@ function mostrarMensaje(texto) {
           style="
             margin-top:10px;
             padding:10px;
-            background:gold;
+            background: linear-gradient(135deg, #00E5FF, #3B82F6, #A855F7);
+            color: white;
+            box-shadow: 0 0 10px rgba(59,130,246,0.6);
             border:none;
             border-radius:8px;
           ">
@@ -752,6 +758,14 @@ window.onload = function(){
   let cliente = localStorage.getItem("cliente");
   let telefono = localStorage.getItem("telefono");
 
+  let logo = localStorage.getItem("logoCliente");
+
+  if(logo){
+    let img = document.getElementById("logoCliente");
+    img.src = logo;
+    img.style.display = "block";
+}
+
   if(!cliente){
     document.getElementById("codigoCliente").style.display = "flex";
     return;
@@ -765,7 +779,10 @@ window.onload = function(){
   if(cliente && telefono){
     document.getElementById("jukebox").style.display = "block";
   }
+  
 };
+
+
 
 function logout() {
   localStorage.removeItem("telefono");
@@ -803,6 +820,7 @@ async function guardarCodigo(){
 
     // ✅ guardar cliente válido
     localStorage.setItem("cliente", codigo);
+    localStorage.setItem("logoCliente", data.logo || "");
 
     mostrarMensaje("✅ Bienvenido a " + data.nombre);
 
