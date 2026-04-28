@@ -188,7 +188,6 @@ body {
 </div>
 
 <div id="codigoCliente" class="contenedor">
-
   <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
   <h2>Ingresa código del lugar</h2>
@@ -757,13 +756,6 @@ window.onload = function(){
 
   let cliente = localStorage.getItem("cliente");
   let telefono = localStorage.getItem("telefono");
-  let logo = localStorage.getItem("logoCliente");
-
-  if(logo){
-    let img = document.getElementById("logoCliente");
-    img.src = logo;
-    img.style.display = "block";
-}
 
   let logo = localStorage.getItem("logoCliente");
 
