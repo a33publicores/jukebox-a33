@@ -851,6 +851,23 @@ function cerrarSesion(){
 
 }
 
+function cargarEstadoMusica(){
+
+  let cliente = localStorage.getItem("cliente");
+
+  fetch(URL_BACKEND + "?accion=estado_cola&cliente=" + cliente)
+    .then(r => r.json())
+    .then(data => {
+
+      if(!data.ok) return;
+
+      document.getElementById("songActual").innerText = data.actual || "Sin música";
+      document.getElementById("songNext").innerText = data.siguiente || "—";
+
+    })
+    .catch(e => console.log("Error estado música", e));
+}
+
 
 </script>
 
