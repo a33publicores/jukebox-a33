@@ -24,30 +24,41 @@
   padding: 12px 25px;
   margin-top: 10px;
   border: none;
-  border-radius: 8px;
-  background: linear-gradient(45deg, #FFD700, #FFA500);
-  color: black;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #00E5FF, #3B82F6, #A855F7);
+  color: white;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(59,130,246,0.4);
 }
 
 button:hover {
   transform: scale(1.05);
-  opacity: 0.9;
+  box-shadow: 0 0 20px rgba(168,85,247,0.8);
 }
 
 input {
   width: 80%;
   padding: 12px;
   margin: 8px;
-  border-radius: 6px;
-  border: none;
+  border-radius: 10px;
+  border: 1px solid #3B82F6;
+  background: #1e1e1e;
+  color: white;
+}
+
+input:focus {
+  outline: none;
+  border-color: #A855F7;
+  box-shadow: 0 0 8px #A855F7;
 }
 
 h2 {
   margin-top: 20px;
-  color: #FFD700;
+  background: linear-gradient(90deg, #00E5FF, #A855F7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 select {
@@ -68,7 +79,7 @@ select {
 }
 
 body {
-  background: linear-gradient(180deg, #0f0f0f, #1c1c1c);
+  background: radial-gradient(circle at center, #0f172a, #000000);
 }
 
 .result {
@@ -177,6 +188,7 @@ body {
 </div>
 
 <div id="codigoCliente" class="contenedor">
+  <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
   <h2>Ingresa código del lugar</h2>
 
@@ -191,7 +203,9 @@ body {
 <!-- ========================= -->
 <div id="bienvenida" style="display:none;" class="contenedor">
 
-  <img src="https://lh3.googleusercontent.com/d/1sGeypXkuhP1o4SG6ESMiIaRTdrhIgOzi" class="logo">
+  <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
+
+  <img id="logoCliente" style="width:120px; border-radius:12px; display:none;">
 
   <p>Bienvenido a PlayBar Go</p>
   <p>🎶 Tú eliges la música 🎶</p>
@@ -228,11 +242,14 @@ body {
 <!-- ========================= -->
 <div id="jukebox" style="display:none;">
 
-</div>
-
   <img src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
-  <p id="usuarioActivo" style="color:#FFD700;"></p>
+  <p id="usuarioActivo" style="
+  background: linear-gradient(90deg, #00E5FF, #A855F7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+"></p>
+
   <button onclick="logout()">Cerrar sesión</button>
 
   <h1>🎵 Pide tu canción</h1>
@@ -241,7 +258,12 @@ body {
   
   <button onclick="buscarVideos(true)">🔍 Buscar</button>
 
-  <div id="seleccionActual" style="margin:10px; color:#FFD700;"></div>
+  <div id="seleccionActual" style="
+  margin:10px;
+  background: linear-gradient(90deg, #00E5FF, #A855F7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+"></div>
 
   <div id="results"></div>
 
@@ -281,7 +303,9 @@ function mostrarConfirm(texto) {
           <button id="btnAceptar" style="
             margin-top:10px;
             padding:10px;
-            background:gold;
+            background: linear-gradient(135deg, #00E5FF, #3B82F6, #A855F7);
+            color: white;
+            box-shadow: 0 0 10px rgba(59,130,246,0.6);
             border:none;
             border-radius:8px;
             margin-right:10px;
@@ -343,7 +367,9 @@ function mostrarMensaje(texto) {
           style="
             margin-top:10px;
             padding:10px;
-            background:gold;
+            background: linear-gradient(135deg, #00E5FF, #3B82F6, #A855F7);
+            color: white;
+            box-shadow: 0 0 10px rgba(59,130,246,0.6);
             border:none;
             border-radius:8px;
           ">
@@ -731,6 +757,14 @@ window.onload = function(){
   let cliente = localStorage.getItem("cliente");
   let telefono = localStorage.getItem("telefono");
 
+  let logo = localStorage.getItem("logoCliente");
+
+  if(logo){
+    let img = document.getElementById("logoCliente");
+    img.src = logo;
+    img.style.display = "block";
+}
+
   if(!cliente){
     document.getElementById("codigoCliente").style.display = "flex";
     return;
@@ -744,7 +778,10 @@ window.onload = function(){
   if(cliente && telefono){
     document.getElementById("jukebox").style.display = "block";
   }
+  
 };
+
+
 
 function logout() {
   localStorage.removeItem("telefono");
@@ -782,6 +819,7 @@ async function guardarCodigo(){
 
     // ✅ guardar cliente válido
     localStorage.setItem("cliente", codigo);
+    localStorage.setItem("logoCliente", data.logo || "");
 
     mostrarMensaje("✅ Bienvenido a " + data.nombre);
 
@@ -811,23 +849,6 @@ function cerrarSesion(){
 
   mostrarMensaje("Sesión cerrada");
 
-}
-
-function cargarEstadoMusica(){
-
-  let cliente = localStorage.getItem("cliente");
-
-  fetch(`${BACKEND}/estado_cola?cliente=${cliente}`)
-    .then(r => r.json())
-    .then(data => {
-
-      if(!data.ok) return;
-
-      document.getElementById("songActual").innerText = data.actual || "Sin música";
-      document.getElementById("songNext").innerText = data.siguiente || "—";
-
-    })
-    .catch(e => console.log("Error estado música", e));
 }
 
 
