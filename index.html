@@ -240,7 +240,7 @@ body {
 <!-- ========================= -->
 <!-- 🔥 JUKEBOX -->
 <!-- ========================= -->
-<div id="jukebox" style="display:none;" <div id="estadoMusica" style="margin:10px; text-align:center;">
+<div id="estadoMusica" style="margin:10px; text-align:center;">
   
   <div style="font-size:14px; opacity:0.7;">Sonando ahora</div>
   <div id="songActual" style="font-weight:bold; margin-bottom:10px;"></div>
@@ -248,7 +248,7 @@ body {
   <div style="font-size:12px; opacity:0.5;">Siguiente</div>
   <div id="songNext"></div>
 
-</div>>
+</div>
 
   <img src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
@@ -788,7 +788,8 @@ window.onload = function(){
   if(cliente && telefono){
     document.getElementById("jukebox").style.display = "block";
   }
-  
+  cargarEstadoMusica();
+setInterval(cargarEstadoMusica, 8000);
 };
 
 
