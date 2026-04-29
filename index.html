@@ -828,7 +828,7 @@ function cargarEstadoMusica(){
 
   let cliente = localStorage.getItem("cliente");
 
-  fetch(URL_BACKEND + "?accion=estado_cola&cliente=" + cliente)
+  fetch(`${BACKEND}/estado_cola?cliente=${cliente}`)
     .then(r => r.json())
     .then(data => {
 
