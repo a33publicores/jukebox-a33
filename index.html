@@ -240,19 +240,9 @@ body {
 <!-- ========================= -->
 <!-- 🔥 JUKEBOX -->
 <!-- ========================= -->
-<div id="estadoMusica" style="margin:10px; text-align:center;">
-  
-  <div style="font-size:14px; opacity:0.7;">Sonando ahora</div>
-  <div id="songActual" style="font-weight:bold; margin-bottom:10px;"></div>
-
-  <div style="font-size:12px; opacity:0.5;">Siguiente</div>
-  <div id="songNext"></div>
-
-</div>
+<div id="jukebox" style="display:none;">
 
   <img src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
-
-  
 
   <p id="usuarioActivo" style="
   background: linear-gradient(90deg, #00E5FF, #A855F7);
@@ -260,7 +250,7 @@ body {
   -webkit-text-fill-color: transparent;
 "></p>
 
-  <button onclick="cerrarSesion()">Cerrar sesión</button>
+  <button onclick="logout()">Cerrar sesión</button>
 
   <h1>🎵 Pide tu canción</h1>
 
@@ -788,8 +778,7 @@ window.onload = function(){
   if(cliente && telefono){
     document.getElementById("jukebox").style.display = "block";
   }
-  cargarEstadoMusica();
-setInterval(cargarEstadoMusica, 8000);
+  
 };
 
 
@@ -860,23 +849,6 @@ function cerrarSesion(){
 
   mostrarMensaje("Sesión cerrada");
 
-}
-
-function cargarEstadoMusica(){
-
-  let cliente = localStorage.getItem("cliente");
-
-  fetch(`${BACKEND}/estado_cola?cliente=${cliente}`)
-    .then(r => r.json())
-    .then(data => {
-
-      if(!data.ok) return;
-
-      document.getElementById("songActual").innerText = data.actual || "Sin música";
-      document.getElementById("songNext").innerText = data.siguiente || "—";
-
-    })
-    .catch(e => console.log("Error estado música", e));
 }
 
 
