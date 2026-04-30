@@ -20,45 +20,41 @@
 }
     .result:hover { background:#222; }
     
-    button {
-  padding: 12px 25px;
-  margin-top: 10px;
+button {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #00E5FF, #3B82F6, #A855F7);
+  border-radius: 12px;
+
+  background: linear-gradient(45deg, #00d4ff, #7a00ff);
   color: white;
+
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px rgba(59,130,246,0.4);
+
+  transition: 0.3s;
 }
 
 button:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(168,85,247,0.8);
+  opacity: 0.9;
 }
 
 input {
-  width: 80%;
-  padding: 12px;
-  margin: 8px;
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
   border-radius: 10px;
-  border: 1px solid #3B82F6;
-  background: #1e1e1e;
-  color: white;
-}
-
-input:focus {
-  outline: none;
-  border-color: #A855F7;
-  box-shadow: 0 0 8px #A855F7;
+  border: none;
+  margin: 10px 0;
 }
 
 h2 {
   margin-top: 20px;
-  background: linear-gradient(90deg, #00E5FF, #A855F7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 22px;
+  color: #00d4ff;
 }
 
 select {
@@ -79,7 +75,18 @@ select {
 }
 
 body {
-  background: radial-gradient(circle at center, #0f172a, #000000);
+  margin: 0;
+  padding: 0;
+  font-family: Arial;
+  background: linear-gradient(180deg, #000000, #0a0a0a);
+  color: white;
+  text-align: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
 }
 
 .result {
@@ -165,20 +172,27 @@ body {
 
 /* 📱 CONTENEDOR */
 .contenedor {
+  width: 100%;
+  max-width: 400px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  gap: 15px;
+
+  gap: 20px;
+  padding: 20px;
 }
 
 /* 🔥 LOGO NORMAL (pantalla principal) */
 .logo {
-  width: 140px;
+  width: 180px;
 }
 
   </style>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 </head>
 
 <body>
@@ -188,11 +202,10 @@ body {
 </div>
 
 <div id="codigoCliente" class="contenedor">
-  <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
   <h2>Ingresa código del lugar</h2>
 
-  <input id="codigoLugar" placeholder="Código Asignado">
+  <input id="codigoLugar" placeholder="Ej: A33">
 
   <button onclick="guardarCodigo()">Entrar</button>
 
@@ -203,9 +216,7 @@ body {
 <!-- ========================= -->
 <div id="bienvenida" style="display:none;" class="contenedor">
 
-  <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
-
-  <img id="logoCliente" style="width:120px; border-radius:12px; display:none;">
+  <img src="https://lh3.googleusercontent.com/d/1sGeypXkuhP1o4SG6ESMiIaRTdrhIgOzi" class="logo">
 
   <p>Bienvenido a PlayBar Go</p>
   <p>🎶 Tú eliges la música 🎶</p>
@@ -244,12 +255,7 @@ body {
 
   <img src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
-  <p id="usuarioActivo" style="
-  background: linear-gradient(90deg, #00E5FF, #A855F7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-"></p>
-
+  <p id="usuarioActivo" style="color:#FFD700;"></p>
   <button onclick="logout()">Cerrar sesión</button>
 
   <h1>🎵 Pide tu canción</h1>
@@ -258,12 +264,7 @@ body {
   
   <button onclick="buscarVideos(true)">🔍 Buscar</button>
 
-  <div id="seleccionActual" style="
-  margin:10px;
-  background: linear-gradient(90deg, #00E5FF, #A855F7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-"></div>
+  <div id="seleccionActual" style="margin:10px; color:#FFD700;"></div>
 
   <div id="results"></div>
 
@@ -303,9 +304,7 @@ function mostrarConfirm(texto) {
           <button id="btnAceptar" style="
             margin-top:10px;
             padding:10px;
-            background: linear-gradient(135deg, #00E5FF, #3B82F6, #A855F7);
-            color: white;
-            box-shadow: 0 0 10px rgba(59,130,246,0.6);
+            background:gold;
             border:none;
             border-radius:8px;
             margin-right:10px;
@@ -367,9 +366,7 @@ function mostrarMensaje(texto) {
           style="
             margin-top:10px;
             padding:10px;
-            background: linear-gradient(135deg, #00E5FF, #3B82F6, #A855F7);
-            color: white;
-            box-shadow: 0 0 10px rgba(59,130,246,0.6);
+            background:gold;
             border:none;
             border-radius:8px;
           ">
@@ -757,14 +754,6 @@ window.onload = function(){
   let cliente = localStorage.getItem("cliente");
   let telefono = localStorage.getItem("telefono");
 
-  let logo = localStorage.getItem("logoCliente");
-
-  if(logo){
-    let img = document.getElementById("logoCliente");
-    img.src = logo;
-    img.style.display = "block";
-}
-
   if(!cliente){
     document.getElementById("codigoCliente").style.display = "flex";
     return;
@@ -778,10 +767,7 @@ window.onload = function(){
   if(cliente && telefono){
     document.getElementById("jukebox").style.display = "block";
   }
-  
 };
-
-
 
 function logout() {
   localStorage.removeItem("telefono");
@@ -819,7 +805,6 @@ async function guardarCodigo(){
 
     // ✅ guardar cliente válido
     localStorage.setItem("cliente", codigo);
-    localStorage.setItem("logoCliente", data.logo || "");
 
     mostrarMensaje("✅ Bienvenido a " + data.nombre);
 
