@@ -618,6 +618,9 @@ const BACKEND = "https://jukebox-bot-production.up.railway.app";
 let nextPageToken = "";
 let currentQuery = "";
 
+// 🔒 Evita agregar la misma canción dos veces
+let agregandoCancion = false;
+
 
 document.getElementById("search").addEventListener("keydown", async function(e){
 
@@ -672,24 +675,32 @@ data.items.forEach(item => {
 
 async function seleccionar(item){
 
+  // 🔒 Evitar doble ejecución
+  if (agregandoCancion) {
+    console.log("⚠️ Ya se está agregando una canción");
+    return;
+  }
+
   document.getElementById("seleccionActual").innerHTML =
     "🎵 Seleccionaste: " + item.snippet.title;
 
-  // 🔥 OBTENER TELÉFONO CORRECTAMENTE
   let telefono = localStorage.getItem("telefono");
 
   if(!telefono){
     mostrarMensaje("Debes ingresar tu número primero");
     return;
-} 
+  }
 
   let confirmar = await mostrarConfirm(
-  "¿Deseas agregar esta canción?\n\n" + item.snippet.title
-);
+    "¿Deseas agregar esta canción?\n\n" + item.snippet.title
+  );
 
   if(!confirmar){
     return;
   }
+
+  // 🔒 Activar bloqueo
+  agregandoCancion = true;
 
   try {
 
@@ -701,7 +712,7 @@ async function seleccionar(item){
       body: JSON.stringify({
         tipo: "cancion",
         cliente: localStorage.getItem("cliente"),
-        telefono: telefono,   // 🔥 YA CORRECTO
+        telefono: telefono,
         titulo: item.snippet.title,
         canal: item.snippet.channelTitle,
         videoId: item.id.videoId
@@ -710,7 +721,7 @@ async function seleccionar(item){
 
     let text = await res.text();
 
-    console.log("RESPUESTA BACKEND:", text); // 🔥 DEBUG
+    console.log("RESPUESTA BACKEND:", text);
 
     if(text === "LIMITE"){
       mostrarMensaje("🚫 Alcanzaste el límite de 15 canciones por hoy");
@@ -726,6 +737,11 @@ async function seleccionar(item){
   } catch (error) {
     console.error("ERROR FETCH:", error);
     mostrarMensaje("❌ Error de conexión");
+  } finally {
+    // 🔓 Liberar bloqueo después de 3 segundos
+    setTimeout(() => {
+      agregandoCancion = false;
+    }, 3000);
   }
 }
 
