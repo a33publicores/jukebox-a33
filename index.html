@@ -168,10 +168,12 @@ body {
 .contenedor {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
+  justify-content: flex-start;
+  min-height: 100vh;
   gap: 15px;
+  padding: 40px 20px;
+  box-sizing: border-box;
 }
 
 /* 🔥 LOGO NORMAL (pantalla principal) */
@@ -561,11 +563,13 @@ border-radius:12px;
   }
 
   input,
-  button,
-  select {
-    font-size: 17px;
-    padding: 15px;
-  }
+select,
+button {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 56px !important;
+    font-size: 18px !important;
+}
 
   .result img {
     width: 95px !important;
