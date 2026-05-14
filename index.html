@@ -373,7 +373,214 @@ border-radius:12px;
 }
 
 }
+/* =========================================
+   PLAYBAR GO - MOBILE APP PRO
+========================================= */
 
+@media screen and (max-width: 768px) {
+
+  /* Ajustes generales */
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+    font-size: 16px;
+  }
+
+  body {
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  /* Contenedores principales */
+  .contenedor,
+  #jukebox,
+  #login,
+  #bienvenida,
+  #codigoCliente {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  /* Logo principal */
+  .logo {
+    width: 120px;
+    max-width: 45vw;
+    margin: 0 auto 15px auto;
+    display: block;
+  }
+
+  /* Títulos */
+  h1 {
+    font-size: 28px;
+    margin: 10px 0 15px 0;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin: 10px 0 15px 0;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 18px;
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.4;
+  }
+
+  /* Inputs */
+  input,
+  select {
+    width: 100% !important;
+    max-width: 100%;
+    padding: 16px;
+    font-size: 18px;
+    border-radius: 14px;
+    box-sizing: border-box;
+    margin: 8px 0;
+  }
+
+  /* Botones */
+  button {
+    width: 100%;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 14px;
+    margin-top: 10px;
+    box-sizing: border-box;
+  }
+
+  /* Usuario activo */
+  #usuarioActivo {
+    font-size: 18px;
+    margin: 12px 0;
+    text-align: center;
+  }
+
+  /* Texto selección actual */
+  #seleccionActual {
+    font-size: 17px;
+    line-height: 1.4;
+    padding: 10px;
+    text-align: center;
+  }
+
+  /* Resultados */
+  #results {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .result {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 16px;
+    box-sizing: border-box;
+  }
+
+  .result > div {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .result img {
+    width: 110px !important;
+    min-width: 110px !important;
+    max-width: 110px !important;
+    border-radius: 10px;
+  }
+
+  .result p {
+    margin: 0 0 6px 0;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 1.35;
+    text-align: left;
+  }
+
+  .result small {
+    font-size: 14px;
+    color: #bbbbbb;
+    display: block;
+    text-align: left;
+  }
+
+  /* Splash */
+  #logoAnimado {
+    width: 150px;
+  }
+
+  /* Logo del cliente */
+  #logoCliente {
+    width: 110px !important;
+    max-width: 35vw;
+  }
+
+  /* Modales */
+  .modal,
+  [style*="position: fixed"] {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  /* Ocultar desbordamientos */
+  * {
+    max-width: 100%;
+  }
+}
+
+/* Pantallas muy pequeñas */
+@media screen and (max-width: 480px) {
+
+  body {
+    padding: 10px;
+  }
+
+  .logo {
+    width: 100px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  input,
+  button,
+  select {
+    font-size: 17px;
+    padding: 15px;
+  }
+
+  .result img {
+    width: 95px !important;
+    min-width: 95px !important;
+    max-width: 95px !important;
+  }
+
+  .result p {
+    font-size: 16px;
+  }
+
+  .result small {
+    font-size: 13px;
+  }
+}
   </style>
 </head>
 
