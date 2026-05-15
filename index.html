@@ -177,8 +177,13 @@ body {
 }
 
 /* 🔥 LOGO NORMAL (pantalla principal) */
+/* 🔥 LOGO NORMAL (pantalla principal) */
 .logo {
-  width: 140px;
+  width: 220px;
+  max-width: 85vw;
+  height: auto;
+  display: block;
+  margin: 0 auto 25px auto;
 }
 
 /* =========================================
@@ -218,15 +223,16 @@ body {
     }
 
     /* Logos mucho más grandes */
-    .logo,
-    #logoAnimado,
-    #logoCliente {
-        width: 260px !important;
-        max-width: 85vw !important;
-        height: auto !important;
-        display: block !important;
-        margin: 10px auto 30px auto !important;
-    }
+    /* Logos mucho más grandes en móvil */
+.logo,
+#logoAnimado,
+#logoCliente {
+    width: 320px !important;
+    max-width: 90vw !important;
+    height: auto !important;
+    display: block !important;
+    margin: 20px auto 35px auto !important;
+}
 
     /* Títulos */
     h1 {
@@ -336,17 +342,23 @@ body {
 <body>
 
 <div id="splash">
-  <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1sGeypXkuhP1o4SG6ESMiIaRTdrhIgOzi" class="logo">
-</div>
+  <img id="logoAnimado"
+     src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr"
+     class="logo"
+     style="width:320px; max-width:90vw; height:auto;">
 
 <div id="codigoCliente" class="contenedor">
   <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
-  <h2>Ingresa código del lugar</h2>
+  <h2 style="font-size:32px; margin-bottom:20px;">
+  Ingresa código del lugar
+</h2>
 
   <input id="codigoLugar" placeholder="Código Asignado">
 
-  <button onclick="guardarCodigo()">Entrar</button>
+  <button onclick="guardarCodigo()" style="width:220px;">
+  Entrar
+</button>
 
 </div>
 
