@@ -168,176 +168,418 @@ body {
 .contenedor {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
+  height: 100vh;
   gap: 15px;
-  padding: 40px 20px;
-  box-sizing: border-box;
 }
 
 /* 🔥 LOGO NORMAL (pantalla principal) */
-/* 🔥 LOGO NORMAL (pantalla principal) */
 .logo {
-  width: 220px;
-  max-width: 85vw;
-  height: auto;
-  display: block;
-  margin: 0 auto 25px auto;
+  width: 140px;
 }
 
 /* =========================================
    PLAYBAR GO - MOVIL PRO
 ========================================= */
 
-/* ==========================================================
-   DISEÑO MÓVIL TIPO APP (REEMPLAZA TODO TU @media ACTUAL)
-   ========================================================== */
+@media screen and (max-width: 768px){
+
+html,body{
+width:100%;
+overflow-x:hidden;
+}
+
+/* LOGIN */
+
+#loginScreen{
+padding:20px;
+box-sizing:border-box;
+}
+
+.loginBox{
+width:100%;
+max-width:380px;
+padding:30px 22px;
+border-radius:20px;
+}
+
+.loginLogo{
+width:160px;
+margin-bottom:20px;
+}
+
+.loginBox h2{
+font-size:28px;
+margin-bottom:20px;
+}
+
+.loginBox input{
+padding:16px;
+font-size:18px;
+border-radius:12px;
+}
+
+.btnLogin,
+.loginBox button{
+padding:16px;
+font-size:20px;
+border-radius:14px;
+font-weight:bold;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:260px;
+}
+
+/* CONTENIDO */
+
+.content{
+margin:0;
+padding:15px;
+width:100%;
+box-sizing:border-box;
+}
+
+/* TOP BAR */
+
+.topBar{
+flex-direction:column;
+align-items:flex-start;
+gap:10px;
+padding:15px;
+}
+
+/* PRODUCTOS */
+
+#resultados{
+display:grid;
+grid-template-columns:1fr;
+gap:16px;
+max-width:100%;
+}
+
+.producto{
+padding:14px;
+border-radius:16px;
+}
+
+.producto b{
+font-size:18px;
+line-height:1.3;
+}
+
+.producto button{
+width:100%;
+padding:14px;
+font-size:17px;
+border-radius:12px;
+margin-top:10px;
+}
+
+/* CANTIDADES */
+
+.cantidadBox{
+justify-content:center;
+margin-top:10px;
+}
+
+.cantidadBox button{
+width:42px;
+height:42px;
+font-size:18px;
+}
+
+.cantidadBox input{
+height:42px;
+font-size:18px;
+}
+
+/* BUSCADOR */
+
+#busqueda{
+width:100%;
+padding:16px;
+font-size:18px;
+border-radius:14px;
+box-sizing:border-box;
+}
+
+/* MESAS */
+
+#mesasContainer{
+display:grid;
+grid-template-columns:1fr;
+gap:12px;
+}
+
+.mesa{
+width:100%;
+height:85px;
+font-size:20px;
+border-radius:16px;
+}
+
+/* PANEL CUENTA */
+
+.cuentaPanel{
+position:relative;
+width:100%;
+height:auto;
+margin-top:25px;
+border-left:none;
+padding:15px;
+box-sizing:border-box;
+}
+
+.totalBox{
+font-size:28px;
+padding:18px;
+}
+
+/* TABLAS */
+
+table{
+display:block;
+overflow-x:auto;
+white-space:nowrap;
+}
+
+/* DASHBOARD */
+
+.kpiContainer{
+flex-direction:column;
+}
+
+.kpiCard{
+width:100%;
+box-sizing:border-box;
+}
+
+canvas{
+height:280px !important;
+}
+
+/* BOTON MENU */
+
+.menuToggle{
+top:14px;
+left:14px;
+padding:12px 15px;
+font-size:22px;
+border-radius:12px;
+}
+
+}
+/* =========================================
+   PLAYBAR GO - MOBILE APP PRO
+========================================= */
+
 @media screen and (max-width: 768px) {
 
-    /* Pantalla completa */
-    html, body {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
-        min-height: 100vh !important;
-        overflow-x: hidden !important;
-    }
+  /* Ajustes generales */
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+    font-size: 16px;
+  }
 
-    /* Contenedores principales */
-#codigoCliente,
-#bienvenida,
-#login,
-#jukebox,
-.contenedor,
-.container,
-.main-container {
+  body {
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  /* Contenedores principales */
+  .contenedor,
+  #jukebox,
+  #login,
+  #bienvenida,
+  #codigoCliente {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  /* Logo principal */
+  .logo {
+    width: 120px;
+    max-width: 45vw;
+    margin: 0 auto 15px auto;
+    display: block;
+  }
+
+  /* Títulos */
+  h1 {
+    font-size: 28px;
+    margin: 10px 0 15px 0;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin: 10px 0 15px 0;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 18px;
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.4;
+  }
+
+  /* Inputs */
+  input,
+  select {
     width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 80px 30px 40px 30px !important;
-    box-sizing: border-box !important;
+    max-width: 100%;
+    padding: 16px;
+    font-size: 18px;
+    border-radius: 14px;
+    box-sizing: border-box;
+    margin: 8px 0;
+  }
+
+  /* Botones */
+  button {
+    width: 100%;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 14px;
+    margin-top: 10px;
+    box-sizing: border-box;
+  }
+
+  /* Usuario activo */
+  #usuarioActivo {
+    font-size: 18px;
+    margin: 12px 0;
+    text-align: center;
+  }
+
+  /* Texto selección actual */
+  #seleccionActual {
+    font-size: 17px;
+    line-height: 1.4;
+    padding: 10px;
+    text-align: center;
+  }
+
+  /* Resultados */
+  #results {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .result {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 16px;
+    box-sizing: border-box;
+  }
+
+  .result > div {
     display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
 
-    /* Escala toda la interfaz */
-    zoom: 2 !important;
+  .result img {
+    width: 110px !important;
+    min-width: 110px !important;
+    max-width: 110px !important;
+    border-radius: 10px;
+  }
+
+  .result p {
+    margin: 0 0 6px 0;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 1.35;
+    text-align: left;
+  }
+
+  .result small {
+    font-size: 14px;
+    color: #bbbbbb;
+    display: block;
+    text-align: left;
+  }
+
+  /* Splash */
+  #logoAnimado {
+    width: 150px;
+  }
+
+  /* Logo del cliente */
+  #logoCliente {
+    width: 110px !important;
+    max-width: 35vw;
+  }
+
+  /* Modales */
+  .modal,
+  [style*="position: fixed"] {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  /* Ocultar desbordamientos */
+  * {
+    max-width: 100%;
+  }
 }
 
-    /* Logos mucho más grandes */
-    /* Logos mucho más grandes en móvil */
-.logo,
-#logoAnimado,
-#logoCliente {
-    width: 320px !important;
-    max-width: 90vw !important;
-    height: auto !important;
-    display: block !important;
-    margin: 20px auto 35px auto !important;
-}
+/* Pantallas muy pequeñas */
+@media screen and (max-width: 480px) {
 
-    /* Títulos */
-    h1 {
-        font-size: 42px !important;
-        line-height: 1.2 !important;
-        margin: 20px 0 !important;
-    }
+  body {
+    padding: 10px;
+  }
 
-    h2 {
-        font-size: 34px !important;
-        line-height: 1.2 !important;
-        margin: 20px 0 !important;
-    }
+  .logo {
+    width: 100px;
+  }
 
-    h3 {
-        font-size: 28px !important;
-        line-height: 1.3 !important;
-        margin: 15px 0 !important;
-    }
+  h1 {
+    font-size: 24px;
+  }
 
-    p, label, small {
-        font-size: 24px !important;
-        line-height: 1.5 !important;
-    }
+  h2 {
+    font-size: 22px;
+  }
 
-    /* Inputs */
-    input,
-    select,
-    textarea {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-height: 78px !important;
-        font-size: 28px !important;
-        padding: 20px 24px !important;
-        margin: 12px 0 !important;
-        border-radius: 18px !important;
-        box-sizing: border-box !important;
-    }
+  input,
+  button,
+  select {
+    font-size: 17px;
+    padding: 15px;
+  }
 
-    /* Placeholder */
-    input::placeholder,
-    textarea::placeholder {
-        font-size: 24px !important;
-    }
+  .result img {
+    width: 95px !important;
+    min-width: 95px !important;
+    max-width: 95px !important;
+  }
 
-    /* Botones grandes tipo app */
-    button,
-    .btn {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-height: 78px !important;
-        font-size: 28px !important;
-        font-weight: bold !important;
-        padding: 20px 24px !important;
-        margin-top: 14px !important;
-        border-radius: 18px !important;
-        box-sizing: border-box !important;
-    }
+  .result p {
+    font-size: 16px;
+  }
 
-    /* Resultados de búsqueda */
-    #results {
-        width: 100% !important;
-        margin-top: 20px !important;
-    }
-
-    .result {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 18px !important;
-        margin: 16px 0 !important;
-        border-radius: 18px !important;
-        box-sizing: border-box !important;
-    }
-
-    /* Miniaturas grandes */
-    .result img {
-        width: 140px !important;
-        min-width: 140px !important;
-        max-width: 140px !important;
-        height: 140px !important;
-        object-fit: cover !important;
-        border-radius: 12px !important;
-    }
-
-    /* Texto de resultados */
-    .result p {
-        font-size: 24px !important;
-        line-height: 1.4 !important;
-        margin: 0 !important;
-    }
-
-    .result small {
-        font-size: 20px !important;
-    }
-
-    /* Usuario activo */
-    #usuarioActivo,
-    #seleccionActual {
-        font-size: 24px !important;
-        line-height: 1.5 !important;
-        margin: 16px 0 !important;
-    }
+  .result small {
+    font-size: 13px;
+  }
 }
   </style>
 </head>
@@ -345,23 +587,17 @@ body {
 <body>
 
 <div id="splash">
-  <img id="logoAnimado"
-       src="https://lh3.googleusercontent.com/d/1sGeypXkuhP1o4SG6ESMiIaRTdrhIgOzi"
-       class="logo">
+  <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1sGeypXkuhP1o4SG6ESMiIaRTdrhIgOzi" class="logo">
 </div>
 
 <div id="codigoCliente" class="contenedor">
   <img id="logoAnimado" src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
-  <h2 style="font-size:32px; margin-bottom:20px;">
-  Ingresa código del lugar
-</h2>
+  <h2>Ingresa código del lugar</h2>
 
   <input id="codigoLugar" placeholder="Código Asignado">
 
-  <button onclick="guardarCodigo()" style="width:220px;">
-  Entrar
-</button>
+  <button onclick="guardarCodigo()">Entrar</button>
 
 </div>
 
@@ -407,14 +643,7 @@ body {
 <!-- ========================= -->
 <!-- 🔥 JUKEBOX -->
 <!-- ========================= -->
-<div id="jukebox" style="
-  display:none;
-  width:100vw;
-  max-width:none;
-  margin:0;
-  padding:20px;
-  box-sizing:border-box;
-">
+<div id="jukebox" style="display:none;">
 
   <img src="https://lh3.googleusercontent.com/d/1D8_YN-_Ro5ldLSzgK-QDClR6WHLRKjYr" class="logo">
 
