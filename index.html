@@ -748,11 +748,11 @@ if (
     console.error("ERROR FETCH:", error);
     mostrarMensaje("❌ Error de conexión");
   } finally {
-    // 🔓 Liberar bloqueo después de 3 segundos
-    setTimeout(() => {
-      agregandoCancion = false;
-    }, 3000);
-  }
+  // 🔓 Liberar el bloqueo inmediatamente después de recibir la respuesta
+  // para evitar que un segundo evento (doble clic o touch) vuelva a ejecutar
+  // la función mientras el temporizador sigue activo.
+  agregandoCancion = false;
+}
 }
 
 async function buscarVideos(reset = false){
