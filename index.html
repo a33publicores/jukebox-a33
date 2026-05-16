@@ -724,16 +724,25 @@ async function seleccionar(item){
 
     console.log("RESPUESTA BACKEND:", text);
 
-    if(text === "LIMITE"){
-      mostrarMensaje("🚫 Alcanzaste el límite de 15 canciones por hoy");
-      return;
-    }
+    if (text === "LIMITE") {
+  mostrarMensaje("🚫 Alcanzaste el límite de 15 canciones por hoy");
+  return;
+}
 
-    if(text && text.toLowerCase().includes("ok")){
-      mostrarMensaje("✅ Canción agregada");
-    } else {
-      mostrarMensaje("❌ Error al agregar canción");
-    }
+// Si el backend responde OK o si la canción ya existe,
+// mostrar siempre mensaje de éxito.
+if (
+  text &&
+  (
+    text.toLowerCase().includes("ok") ||
+    text.toLowerCase().includes("ya existe") ||
+    text.toLowerCase().includes("no se duplicará")
+  )
+) {
+  mostrarMensaje("✅ Canción agregada correctamente");
+} else {
+  mostrarMensaje("❌ Error al agregar canción");
+}
 
   } catch (error) {
     console.error("ERROR FETCH:", error);
